@@ -1,0 +1,107 @@
+body {
+    background-color: #e1f5fe; /* light-blue lighten-5 */
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+nav {
+    background-color: #b3e5fc; /* light-blue lighten-2 */
+    font-weight: bold;
+}
+
+.navbar-header span {
+    color: #01579b;
+}
+
+.navbar-nav > li > a:hover {
+    background-color: #81d4fa; /* light-blue lighten-3 */
+}
+
+.centerbox {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.loginregbox {
+    width: 450px;
+    padding: 20px 25px;
+    background-color: #b3e5fc; /* light-blue lighten-2 */
+    border-radius: 10px;
+    
+}
+
+.loginregbox .title-box {
+    color: #01579b;
+    margin-bottom: 20px;
+}
+
+.loginregbox .userpass-box {
+    margin: 10px 0px;
+}
+
+.loginregbox .userpass-box input[type="text"] {
+    margin: 10px 0px;
+    height: 40px;
+}
+
+.loginregbox .userpass-box input[type="password"] {
+    margin: 10px 0px;
+    height: 40px;
+}
+
+.loginregbox .userrole-box {
+    margin: 10px 0px;
+    width: 100%;
+}
+
+.loginregbox .userrole-box button {
+    background-color: #03a9f4;
+    color: white;
+    border: solid 1px #0288d1;
+}
+
+.loginregbox .userrole-box button.active {
+    background-color: #0277bd;
+}
+
+.loginregbox .remember-box {
+    margin: 10px 0px;
+}
+
+.loginregbox .action-box {
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

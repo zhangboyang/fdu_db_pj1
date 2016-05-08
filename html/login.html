@@ -1,0 +1,99 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>DB PJ</title>
+    
+    <!-- bootstrap and jquery -->
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    
+    <!-- our css and js -->
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/common.js"></script>
+    <link href="css/login.css" rel="stylesheet">
+    <script src="js/login.js"></script>
+</head>
+<body>
+
+<!-- body begin -->
+
+<nav class="navbar navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <span class="navbar-brand">欢迎使用外卖系统</span>
+    </div>
+    <div id="navbar"><!--
+      <ul class="nav navbar-nav">
+        <li><a href="#">Link</a></li>
+      </ul>-->
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="login.html">登录</a></li>
+        <li><a href="register.html">注册</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="centerbox">
+
+
+
+
+
+
+
+
+<div class="loginregbox">
+
+<form id="loginform">
+<h2 class="title-box">登录</h2>
+
+<div class="userpass-box">
+    <input type="text" name="username" id="inputusername" class="form-control" placeholder="用户名" autofocus>
+    <input type="password" name="password" id="inputpassword" class="form-control" placeholder="密码">
+</div>
+
+<div id="roleselector" class="userrole-box btn-group">
+    <button type="button" data-rolestr="user" class="btn">用户</button>
+    <button type="button" data-rolestr="rest" class="btn">餐厅</button>
+    <button type="button" data-rolestr="deliverer" class="btn">送餐员</button>
+    <button type="button" data-rolestr="admin" class="btn">管理员</button>
+</div>
+
+
+<div class="remember-box checkbox">
+    <label><input type="checkbox" id="remembermebox" value="remember-me">记住我</label>
+</div>
+
+<div id="loginmsgbox">
+<!--
+<div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> Change a few things up and try submitting again.
+</div>
+-->
+</div>
+
+<div class="action-box">
+    <button id="loginbtn" type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
+</div>
+</form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</body>
+</html>
