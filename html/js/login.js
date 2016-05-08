@@ -1,5 +1,21 @@
 
-var userrole = "";
+var userrole = "user";
+
+function check_session()
+{
+    var sdata = get_session_data();
+    if (sdata) console.log(sdata.expires < new Date().getTime(), sdata.expires, new Date().getTime());
+    if (sdata && sdata.expires > new Date().getTime()) {
+        jump_to_session(sdata);
+    }
+}
+
+function jump_to_session(sdata)
+{
+    console.log("JUMP_TO_SESSION: ", sdata);
+    window.location = sdata.userrole + ".html";
+}
+
 
 function init_roleselector()
 {
@@ -7,6 +23,10 @@ function init_roleselector()
         userrole = $(this).attr("data-rolestr");
         $("#roleselector").children("button").removeClass("active");
         $(this).addClass("active");
+    }).each( function () {
+        if ($(this).attr("data-rolestr") == userrole) {
+            $(this).addClass("active");
+        }
     });
 }
 
@@ -16,6 +36,7 @@ function init_loginform()
         e.preventDefault();
         var username = $("#inputusername").val();
         var password = $("#inputpassword").val();
+        var rememberme = $("#remembermebox").is(':checked');
         
         var errtext = ""
         var failflag = false;
@@ -27,7 +48,7 @@ function init_loginform()
             errtext += "密码不能为空\n";
             failflag = true;
         }
-        if (userrole == "") {
+        if (!userrole || userrole == "") {
             errtext += "请选择一种角色\n";
             failflag = true;
         }
@@ -40,18 +61,36 @@ function init_loginform()
             username: username,
             password: password,
             userrole: userrole,
-            rememberme: $("#remembermebox").is(':checked'),
+            rememberme: rememberme,
         };
         
         $("#loginmsgbox").empty();
         $("#loginbtn").text("登录中").prop("disabled", true);
 
         request_data(fdata).then( function (data) {
-            if (data.result == "loginok") {
+            if (data.result == "ok") {
+                $("#loginbtn").text("登录成功");
                 create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候……");
-            } else {
+                var timestamp = new Date();
+                var expdate = new Date();
+                expdate.setSeconds(expdate.getSeconds() + parseInt(data.sessionlife));
+                var sdata = {
+                    username: username,
+                    userrole: userrole,
+                    sessionid: data.sessionid,
+                    sessionlife: data.sessionlife,
+                    timestamp: timestamp.getTime(),
+                    expires: expdate.getTime(),
+                };
+                save_session_data(sdata);
+                setTimeout(function () {
+                    jump_to_session(sdata);
+                }, 1000);
+            } else if (data.result == "error") {
                 create_alert("#loginmsgbox", "danger", "登录失败", data.reason);
                 $("#loginbtn").text("登录").prop("disabled", false);
+            } else {
+                show_error("invalid response data: " + data);
             }
         }, function (reason) {
             show_error("loginform requestdata failed, reason: " + reason);
@@ -60,6 +99,7 @@ function init_loginform()
 }
 
 $(document).ready( function () {
+    check_session();
     init_roleselector();
     init_loginform();
 });

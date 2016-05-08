@@ -1,3 +1,15 @@
+function get_session_data()
+{
+    var ret = Cookies.getJSON("sessiondata");
+    console.log(ret);
+    return ret;
+}
+
+function save_session_data(sdata)
+{
+    console.log("SAVE SESSION DATA: ", sdata);
+    Cookies.set("sessiondata", sdata, { expires: sdata.expires });
+}
 
 function show_error(str)
 {
@@ -13,40 +25,39 @@ function request_data(parameters, callback)
     // FIXME: get some data
     
     return new Promise ( function (resolve, reject) {
-        var data;
-        if (parameters.action == "login") {
-            /*
-                ======= INPUT =======
-                action: "login",
-                username: $("#inputusername").val(),
-                password: $("#inputpassword").val(),
-                userrole: userrole,
-                rememberme: $("#remembermebox").is(':checked'),
-                
-                ======= OUTPUT 1 =======
-                result: "loginok",
-                sessionid: "aaabbbccc"
-                
-                ======= OUTPUT 2 =======
-                result: "loginfailed",
-                reason: "错误的用户名或密码",
-                
-            */
-            if (parameters.username == "zby" && parameters.password == "123456") {
-                data = {
-                    result: "loginok",
-                    sessionid: "aaaaaaaa",
+        setTimeout( function () {
+            var data;
+            if (parameters.action == "login") {
+                /*
+                    ####### ACTION: login #######
+                    ======= INPUT SAMPLE =======
+                    action: "login",
+                    username: $("#inputusername").val(),
+                    password: $("#inputpassword").val(),
+                    userrole: userrole,
+                    rememberme: $("#remembermebox").is(':checked'),
+                    
+                    ======= OUTPUT SAMPLE =======
+
+                    
+                */
+                if (parameters.username == "zby" && parameters.password == "123456") {
+                    data = {
+                        result: "ok",
+                        sessionid: "ahfakjsdhfkjafhdksja",
+                        sessionlife: "60", /* in seconds */
+                    }
+                } else {
+                    data = {
+                        result: "error",
+                        reason: "错误的用户名或密码",
+                    }
                 }
-            } else {
-                data = {
-                    result: "loginfailed",
-                    reason: "错误的用户名或密码",
-                }
+                resolve(data);
             }
-            resolve(data);
-        }
         
-        reject("unknown action!");
+            reject("unknown action!");
+        }, 1000);
     });
 }
 
