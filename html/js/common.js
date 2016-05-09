@@ -104,6 +104,15 @@ function request_data(parameters)
                         result: "ok",
                     };
                 }
+            } else if (parameters.action == "getrestlist") {
+                data = {
+                    result: "ok",
+                    data: [
+                        { rid: "ppxxj", rname: "泡泡香香鸡", rdesc: "卖鸡排的" },
+                        { rid: "qj", rname: "全家", rdesc: "卖盒饭的" },
+                        { rid: "ljr", rname: "漓江人", rdesc: "卖米线的" },
+                    ],
+                };            
             } else {
                 reject("unknown action!");
                 return;
