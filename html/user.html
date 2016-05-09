@@ -48,18 +48,20 @@
 <h2>点餐：请选择一个餐厅</h2>
 </div>
 
+<p>
 <table id="resttable" class="table table-striped">
 <thead>
 <tr>
 <th width="30%">餐厅名称</th>
 <th>简介</th>
-<th width="10%">操作</th>
+<th width="15%">操作</th>
 </tr>
 </thead>
 <tbody>
 <!-- rest list will dynamicly generated here -->
 </tbody>
 </table>
+</p>
 
 </div>
 
@@ -87,12 +89,20 @@
 </div>
 </div>
 
+
+
+<p>
+<strong style="display: inline-block; vertical-align: top;">餐厅简介：</strong><span id="restdesc"></span>
+</p>
+
+
+<p>
 <table id="cuisinetable" class="table table-striped">
 <thead>
 <tr>
 <th width="30%">菜名</th>
 <th>简介</th>
-<th width="15%">价格</th>
+<th width="15%">单价</th>
 <th width="15%">份数</th>
 </tr>
 </thead>
@@ -100,7 +110,14 @@
 <!-- cuisine list will dynamicly generated here -->
 </tbody>
 </table>
+</p>
 
+
+<div id="submitorderarea">
+<div style="padding-left: 70%;"><div id="submitordermsgbox"></div></div>
+<p id="ordertotal" style="text-align: right; padding-right: 20px"></p>
+<p style="text-align: right; padding-right: 20px"><button type="button" id="submitorderbtn" class="btn btn-primary" onclick="submit_order()">现在下单</button></p>
+</div>
 </div>
 
 

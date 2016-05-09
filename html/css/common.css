@@ -117,3 +117,8 @@ nav {
     min-height: 100%;
 }
 
+.mainbox p {
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

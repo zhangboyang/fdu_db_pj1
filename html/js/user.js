@@ -1,18 +1,66 @@
 var ordercontent;
 
+function recalc_ordertotal()
+{
+    var total = 0;
+    ordercontent.forEach( function (citem) {
+        total += parseFloat(citem.cprice) * parseInt(citem.camount);
+    });
+    total = total.toFixed(2);
+    
+    $("#ordertotal").text("总计 " + total + " 元");
+    $("#submitordermsgbox").empty();
+}
+
+function submit_order()
+{
+    var olist = new Array();
+    var havecontentflag = false;
+    for (var i = 0; i < ordercontent.length; i++) {
+        if (ordercontent[i].camount > 0) {
+            havecontentflag = true;
+            olist.push({
+                cid: ordercontent[i].cid,
+                camount: ordercontent[i].camount,
+            });
+        }
+    }
+    if (!havecontentflag) {
+        create_alert("#submitordermsgbox", "danger", "下单失败", "您还没有选择任何一种菜品");
+        return;
+    }
+    
+    $("#submitorderbtn").prop("disabled", true).text("正在下单");
+    
+    request_data({
+        action: "submitorder",
+        data: olist,
+    }).then( function (data) {
+        if (data.result != "ok") {
+            show_error("sumbitorder error: " + data.reason);
+            return;
+        }
+        console.log(data);
+    }, function (reason) {
+        show_error("can't submit order: " + reason);
+    });
+}
+
 function change_cuisine_amount(cobj, delta, amountspan)
 {
     cobj.camount += delta;
     if (cobj.camount < 0) cobj.camount = 0;
     $(amountspan).text(cobj.camount.toString());
-    console.log(ordercontent);
+    recalc_ordertotal();
 }
 
 function load_cuisine_list(robj)
 {
     $("#restpage").hide();
     $("#cuisinepage").show();
+    $("#submitorderarea").hide();
     
+    $("#restdesc").text(robj.rdesc);
     $("#cuisinepage_restname").text(robj.rname);
     $("#cuisinetable").children("tbody").html("<tr><td></td><td>加载中 ...</td><td></td><td></td></tr>");
     request_data({
@@ -38,7 +86,7 @@ function load_cuisine_list(robj)
                     .append($(document.createElement("td"))
                         .text(citem.cdesc))
                     .append($(document.createElement("td"))
-                        .text(citem.cprive))
+                        .text(citem.cprice))
                     .append($(document.createElement("td"))
                         .append($(document.createElement("button"))
                             .attr("type", "button")
@@ -63,6 +111,8 @@ function load_cuisine_list(robj)
                             }))
                     )
             );
+            recalc_ordertotal();
+            $("#submitorderarea").show();
         });
     }, function (reason) {
         show_error("can't get cuisine list: " + reason);

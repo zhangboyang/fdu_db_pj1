@@ -127,9 +127,9 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                     data: [
-                        { cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭" },
-                        { cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团" },
-                        { cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面" },
+                        { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭" },
+                        { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团" },
+                        { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面" },
                     ],
                 };
             } else {
