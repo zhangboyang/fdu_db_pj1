@@ -1,26 +1,4 @@
-
-var userrole = "user";
-
-function check_session()
-{
-    var sdata = get_session_data();
-    if (sdata && sdata.expires > new Date().getTime()) {
-        $("#loginbtn").text("您已登录").prop("disabled", true);
-        create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候……");
-        setTimeout(function () {
-            jump_to_session(sdata);
-        }, 1000);
-    } else {
-        remove_session_data();
-    }
-}
-
-function jump_to_session(sdata)
-{
-    console.log("JUMP_TO_SESSION: ", sdata);
-    window.location = sdata.userrole + ".html";
-}
-
+var userrole = "";
 
 function init_roleselector()
 {
@@ -35,12 +13,13 @@ function init_roleselector()
     });
 }
 
-function init_loginform()
+function init_regform()
 {
-    $("#loginform").submit( function (e) {
+    $("#regform").submit( function (e) {
         e.preventDefault();
         var username = $("#inputusername").val();
         var password = $("#inputpassword").val();
+        var password2 = $("#inputpassword2").val();
         var rememberme = $("#remembermebox").is(':checked');
         
         var errtext = ""
@@ -53,29 +32,32 @@ function init_loginform()
             errtext += "密码不能为空\n";
             failflag = true;
         }
+        if (password != password2) {
+            errtext += "两次输入的密码不相同\n";
+            failflag = true;
+        }
         if (!userrole || userrole == "") {
             errtext += "请选择一种角色\n";
             failflag = true;
         }
-        create_alert("#loginmsgbox", "danger", "登录失败", errtext);
+        create_alert("#regmsgbox", "danger", "注册失败", errtext);
         if (failflag) return;
         
         
         var fdata = {
-            action: "login",
+            action: "register",
             username: username,
             password: password,
             userrole: userrole,
-            rememberme: rememberme,
         };
         
-        $("#loginmsgbox").empty();
-        $("#loginbtn").text("登录中").prop("disabled", true);
+        $("#regmsgbox").empty();
+        $("#regbtn").text("注册中").prop("disabled", true);
 
         request_data(fdata).then( function (data) {
             if (data.result == "ok") {
-                $("#loginbtn").text("登录成功");
-                create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候……");
+                $("#regbtn").text("注册成功");
+                create_alert("#regmsgbox", "success", "注册成功", "页面跳转中，请稍候……");
                 var timestamp = new Date();
                 var expdate = new Date();
                 expdate.setSeconds(expdate.getSeconds() + parseInt(data.sessionlife));
@@ -86,27 +68,26 @@ function init_loginform()
                     sessionlife: data.sessionlife,
                     timestamp: timestamp.getTime(),
                     expires: expdate.getTime(),
-                    rememberme: rememberme,
                 };
                 save_session_data(sdata);
                 setTimeout(function () {
-                    jump_to_session(sdata);
+                    window.location = "login.html";
                 }, 1000);
             } else if (data.result == "error") {
-                create_alert("#loginmsgbox", "danger", "登录失败", data.reason);
-                $("#loginbtn").text("登录").prop("disabled", false);
+                create_alert("#regmsgbox", "danger", "注册失败", data.reason);
+                $("#regbtn").text("注册").prop("disabled", false);
             } else {
                 show_error("invalid response data: " + data);
             }
         }, function (reason) {
-            show_error("loginform requestdata failed, reason: " + reason);
+            show_error("regform requestdata failed, reason: " + reason);
         });
     });
 }
 
 $(document).ready( function () {
+    remove_session_data();
     init_roleselector();
-    init_loginform();
-    check_session();
+    init_regform();
 });
 

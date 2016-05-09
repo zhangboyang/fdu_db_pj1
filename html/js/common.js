@@ -5,10 +5,19 @@ function get_session_data()
     return ret;
 }
 
+function remove_session_data()
+{
+    Cookies.remove("sessiondata");
+}
+
 function save_session_data(sdata)
 {
     console.log("SAVE SESSION DATA: ", sdata);
-    Cookies.set("sessiondata", sdata, { expires: sdata.expires });
+    if (sdata.rememberme) {
+        Cookies.set("sessiondata", sdata, { expires: sdata.expires });
+    } else {
+        Cookies.set("sessiondata", sdata);
+    }
 }
 
 function show_error(str)
@@ -18,10 +27,11 @@ function show_error(str)
 /*
     universal data requester
 */
-function request_data(parameters, callback)
+function request_data(parameters)
 {
     console.log("REQUEST DATA: ", parameters);
     
+    console.log("REQUEST: " + JSON.stringify(parameters));
     // FIXME: get some data
     
     return new Promise ( function (resolve, reject) {
@@ -38,8 +48,7 @@ function request_data(parameters, callback)
                     rememberme: $("#remembermebox").is(':checked'),
                     
                     ======= OUTPUT SAMPLE =======
-
-                    
+                    see below
                 */
                 if (parameters.username == "zby" && parameters.password == "123456") {
                     data = {
@@ -53,10 +62,35 @@ function request_data(parameters, callback)
                         reason: "错误的用户名或密码",
                     }
                 }
-                resolve(data);
+            } else if (parameters.action == "register") {
+                /*
+                    ####### ACTION: register #######
+                    ======= INPUT SAMPLE =======
+                    var fdata = {
+                        action: "register",
+                        username: username,
+                        password: password,
+                        userrole: userrole,
+                    };
+                    ======= OUTPUT SAMPLE =======
+                    see below
+                */
+                
+                if (parameters.username == "zby") {
+                    data = {
+                        result: "error",
+                        reason: "用户名已经存在",
+                    };
+                } else {
+                    data = {
+                        result: "ok",
+                    };
+                }
+            } else {
+                reject("unknown action!");
             }
-        
-            reject("unknown action!");
+            console.log("RESPONSE: " + JSON.stringify(data));
+            resolve(data);
         }, 1000);
     });
 }
