@@ -1,0 +1,49 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>post test page</title>
+    <script src="js/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+<h1>POST TEST</h1>
+URL: <input type="text" id="purl"><br><br>
+NAME: <input type="text" id="ppname"><br><br>
+DATA: <br>
+<textarea id="pdata" style="width: 600px; height: 200px">
+</textarea>
+<br>
+<button id="pbtn">POST</button>
+<br>
+<br>
+RESULT: <span id="pstat">ready</span><br>
+<textarea id="presult" style="width: 600px; height: 200px"></textarea>
+
+<script>
+$(document).ready( function () {
+    $("#purl").val(""); // default URL
+    $("#ppname").val("test"); // default NAME
+    $("#pdata").text(JSON.stringify( // defaule DATA
+        {
+            mystring: "helloworld",
+            myint: 123456,
+            myarray: [
+                { key1 : "aaaa", key2 : "bbbb", key3: "cccc" },
+                { key1 : "dddd", key2 : "eeee", key3: "ffff" },
+            ],
+        }
+    , null, "  "));
+    $("#pbtn").click( function () {
+        var pobj = {};
+        pobj[$("#ppname").val()] = $("#pdata").val();
+        console.log(pobj);
+        $.post($("#purl").val(), pobj, null, "text").done( function (data, textStatus, jqXHR) {
+            $("#pstat").text("ok: " + textStatus);
+            $("#presult").text(data);
+        }).fail( function (xhr, textStatus, errorThrown) {
+            $("#pstat").text("failed: " + textStatus + ", " + errorThrown);
+        });
+    });
+});
+</script>
+</body>
+</html>
