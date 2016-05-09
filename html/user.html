@@ -43,8 +43,7 @@
 
 
 
-<div class="container mainbox">
-
+<div id="restpage" class="container mainbox">
 <div class="page-header">
 <h2>点餐：请选择一个餐厅</h2>
 </div>
@@ -74,10 +73,18 @@
 
 
 
-<div class="container mainbox">
-
+<div id="cuisinepage" class="container mainbox">
 <div class="page-header">
-<h2>当前餐厅：<span id="restname">loading<span></h2>
+<div style="display: inline-block; vertical-align: top; margin-top: -1px;">
+<button type="button" class="btn btn-lg btn-default" style="border-radius: 50%; padding: 0px; height: 40px; width: 40px; line-height: 100%;" onclick="load_rest_list()">
+<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+</button>
+</div>
+<div style="display: inline-block; height: 43px;">
+<h2 style="display: inline;">
+&nbsp;&nbsp;当前餐厅：<span id="cuisinepage_restname"><!-- dynamicly generated --></span>
+</h2>
+</div>
 </div>
 
 <table id="cuisinetable" class="table table-striped">

@@ -117,13 +117,28 @@ function request_data(parameters)
                         { rid: "ljr", rname: "漓江人", rdesc: "卖米线的" },
                     ],
                 };
+            } else if (parameters.action == "getcuisinelist") {
+                /* ####### ACTION: getrestlist #######
+                    input 
+                        action: "getcuisinelist",
+                        rid: restaurant id,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: [
+                        { cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭" },
+                        { cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团" },
+                        { cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面" },
+                    ],
+                };
             } else {
                 reject("unknown action!");
                 return;
             }
             console.log("RESPONSE: " + JSON.stringify(data));
             resolve(data);
-        }, 1000);
+        }, 500);
     });
 }
 
