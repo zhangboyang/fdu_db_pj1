@@ -4,7 +4,7 @@ var userrole = "user";
 function check_session()
 {
     var sdata = get_session_data();
-    if (sdata && sdata.expires > new Date().getTime()) {
+    if (sdata) {
         $("#loginbtn").text("您已登录").prop("disabled", true);
         create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候……");
         setTimeout(function () {

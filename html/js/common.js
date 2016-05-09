@@ -1,13 +1,31 @@
 function get_session_data()
 {
-    var ret = Cookies.getJSON("sessiondata");
-    console.log(ret);
-    return ret;
+    var sdata = Cookies.getJSON("sessiondata");
+    if (sdata && sdata.expires > new Date().getTime()) {
+        // sdata is valid
+        return sdata;
+    }
+    return undefined;
 }
 
 function remove_session_data()
 {
-    Cookies.remove("sessiondata");
+    return new Promise ( function (resolve, reject) {
+        var sdata = get_session_data();
+        Cookies.remove("sessiondata");
+        if (sdata) {
+            request_data({
+                action: "logout",
+                sessionid: sdata.sessionid,
+            }).then ( function () {
+                resolve();
+            }, function (reason) {
+                reject("logout failed: " + reason);
+            });
+        } else {
+            resolve();
+        }
+    });
 }
 
 function save_session_data(sdata)
@@ -88,6 +106,7 @@ function request_data(parameters)
                 }
             } else {
                 reject("unknown action!");
+                return;
             }
             console.log("RESPONSE: " + JSON.stringify(data));
             resolve(data);

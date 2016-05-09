@@ -1,7 +1,7 @@
 body {
     background-color: #e1f5fe; /* light-blue lighten-5 */
-    padding-top: 40px;
-    padding-bottom: 40px;
+    padding-top: 70px;
+    padding-bottom: 20px;
 }
 
 nav {
@@ -104,4 +104,16 @@ nav {
 
 
 
+
+
+
+
+
+
+.mainbox {
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px 30px;
+    min-height: 100%;
+}
 
