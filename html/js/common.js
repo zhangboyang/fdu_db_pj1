@@ -105,6 +105,10 @@ function request_data(parameters)
                     };
                 }
             } else if (parameters.action == "getrestlist") {
+                /* ####### ACTION: getrestlist #######
+                    no parameters
+                    output example see below
+                */
                 data = {
                     result: "ok",
                     data: [
@@ -112,7 +116,7 @@ function request_data(parameters)
                         { rid: "qj", rname: "全家", rdesc: "卖盒饭的" },
                         { rid: "ljr", rname: "漓江人", rdesc: "卖米线的" },
                     ],
-                };            
+                };
             } else {
                 reject("unknown action!");
                 return;

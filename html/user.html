@@ -45,15 +45,6 @@
 
 <div class="container mainbox">
 
-
-
-
-
-
-
-
-
-
 <div class="page-header">
 <h2>点餐：请选择一个餐厅</h2>
 </div>
@@ -67,25 +58,11 @@
 </tr>
 </thead>
 <tbody>
-<tr><td></td><td>加载中 ...</td><td></td></tr>
-<!--<tr>
-<td>Mark</td>
-<td>Otto</td>
-<td><button type="button" class="btn btn-sm btn-info">Default</button></td>
-</tr>
-<tr>
-<td>Jacob</td>
-<td>Thornton</td>
-<td><button type="button" class="btn btn-sm btn-default">Default</button></td>
-</tr>
-<tr>
-<td>Jacob</td>
-<td>Thornton</td>
-<td><button type="button" class="btn btn-sm btn-default">Default</button></td>
-</tr>-->
+<!-- rest list will dynamicly generated here -->
 </tbody>
 </table>
 
+</div>
 
 
 
@@ -96,7 +73,29 @@
 
 
 
+
+<div class="container mainbox">
+
+<div class="page-header">
+<h2>当前餐厅：<span id="restname">loading<span></h2>
+</div>
+
+<table id="cuisinetable" class="table table-striped">
+<thead>
+<tr>
+<th width="30%">菜名</th>
+<th>简介</th>
+<th width="15%">价格</th>
+<th width="15%">份数</th>
+</tr>
+</thead>
+<tbody>
+<!-- cuisine list will dynamicly generated here -->
+</tbody>
+</table>
 
 </div>
+
+
 </body>
 </html>

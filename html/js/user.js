@@ -1,5 +1,6 @@
 function load_rest_list()
 {
+    $("#resttable").children("tbody").html("<tr><td></td><td>加载中 ...</td><td></td></tr>");
     request_data({
         action: "getrestlist",
     }).then( function (data) {
