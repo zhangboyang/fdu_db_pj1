@@ -6,7 +6,7 @@ function check_session()
     var sdata = get_session_data();
     if (sdata) {
         $("#loginbtn").text("您已登录").prop("disabled", true);
-        create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候……");
+        create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候 ...");
         setTimeout(function () {
             jump_to_session(sdata);
         }, 1000);
@@ -75,7 +75,7 @@ function init_loginform()
         request_data(fdata).then( function (data) {
             if (data.result == "ok") {
                 $("#loginbtn").text("登录成功");
-                create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候……");
+                create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候 ...");
                 var timestamp = new Date();
                 var expdate = new Date();
                 expdate.setSeconds(expdate.getSeconds() + parseInt(data.sessionlife));

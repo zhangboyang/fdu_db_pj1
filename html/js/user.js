@@ -30,6 +30,8 @@ function submit_order()
         return;
     }
     
+    $("#cuisinetable").find("button").prop("disabled", true);
+    $("#backtorestbtn").prop("disabled", true);
     $("#submitorderbtn").prop("disabled", true).text("正在下单");
     
     request_data({
@@ -40,7 +42,10 @@ function submit_order()
             show_error("sumbitorder error: " + data.reason);
             return;
         }
-        console.log(data);
+        create_alert("#submitordermsgbox", "success", "下单成功", "页面跳转中，请稍候 ...");
+        setTimeout(function () {
+            window.location = "user-orders.html";
+        }, 1000);
     }, function (reason) {
         show_error("can't submit order: " + reason);
     });

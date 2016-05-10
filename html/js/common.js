@@ -1,3 +1,10 @@
+function do_logout()
+{
+    remove_session_data().then( function () {
+        window.location = "login.html";
+    });
+}
+
 function get_session_data()
 {
     var sdata = Cookies.getJSON("sessiondata");
@@ -131,6 +138,18 @@ function request_data(parameters)
                         { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团" },
                         { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面" },
                     ],
+                };
+            } else if (parameters.action == "submitorder") {
+                /* ####### ACTION: getrestlist #######
+                    input 
+                        {
+                            action: "submitorder",
+                            data: olist,
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
                 };
             } else {
                 reject("unknown action!");

@@ -17,6 +17,10 @@ nav {
     background-color: #81d4fa; /* light-blue lighten-3 */
 }
 
+.navbar-nav > li > a:visited {
+    background-color: #81d4fa; /* light-blue lighten-3 */
+}
+
 .centerbox {
     display: flex;
     height: 100%;
