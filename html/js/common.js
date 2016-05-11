@@ -1,7 +1,21 @@
 function check_login()
 {
     var sdata = get_session_data();
-    if (!sdata) window.location = "login.html";
+    if (!sdata) {
+        var h = 53, w = 400;
+        create_alert(document.createElement("div"), "danger", "操作失败", "登录超时，请重新登录")
+            .appendTo("body")
+            .css("height", h.toString() + "px")
+            .css("width", w.toString() + "px")
+            .css("position", "fixed")
+            .css("top", (($(window).height() - h) / 2).toString() + "px")
+            .css("left", (($(window).width() - w) / 2).toString() + "px");
+        setTimeout( function () {
+            window.location = "login.html";
+        }, 1000);
+        return false;
+    }
+    return true;
 }
 
 function init_navbar()
@@ -111,6 +125,17 @@ function show_error(str)
 */
 function request_data(parameters)
 {
+    var request_login = true;
+    switch (parameters.action) {
+        case "login":
+        case "register":
+            request_login = false;
+    }
+    
+    
+    if (request_login && !check_login())
+        return new Promise ( function (resolve, reject) { reject("登录超时"); });
+    
     console.log("REQUEST DATA: ", parameters);
     
     console.log("REQUEST: " + JSON.stringify(parameters));
@@ -317,7 +342,7 @@ function request_data(parameters)
 */
 function create_alert(selector, type, title, content)
 {
-    $(selector).empty().append(
+    return $(selector).empty().append(
         $(document.createElement("div"))
             .addClass("alert alert-" + type)
             .attr("role", "alert")

@@ -2,6 +2,7 @@ var omsgboxtimeoutid;
 function confirm_order(oitem, btnobj)
 {
     $("#backtoorderlistbtn").prop("disabled", true);
+    $("#backtoorderlistbtn2").prop("disabled", true);
     $(btnobj).text("正在确认");
     $("#orderlisttable").find("button").prop("disabled", true);
     $("#confirmbtn").prop("disabled", true);
@@ -33,6 +34,7 @@ function show_order_detail(oitem)
     }
     $("#omsgbox").empty();
     $("#backtoorderlistbtn").prop("disabled", false);
+    $("#backtoorderlistbtn2").prop("disabled", false);
     $("#confirmbtn").prop("disabled", false).text("确认订单");
     $("#orderlistpage").hide();
     $("#orderdetailpage").show();

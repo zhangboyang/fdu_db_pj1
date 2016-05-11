@@ -3,6 +3,7 @@ function lock_userinfo_controls(x)
 {
     $("#userinfoform").find("input").prop("disabled", x);
     $("#submitbtn").prop("disabled", x);
+    $("#resetbtn").prop("disabled", x);
 }
 
 function submit_userinfo()
@@ -23,6 +24,12 @@ function submit_userinfo()
     }, function (reason) {
         show_error("can't set userinfo: " + reason);
     });
+}
+
+function reset_userinfo_form()
+{
+    $("#userinfomsgbox").empty();
+    load_userinfo();
 }
 
 function load_userinfo()
