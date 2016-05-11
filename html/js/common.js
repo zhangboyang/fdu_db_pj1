@@ -277,6 +277,31 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                 };
+            } else if (parameters.action == "getuserinfo") {
+                /* ####### ACTION: getuserinfo #######
+                    input 
+                        {
+                            action: "getuserinfo",
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    username: "zby",
+                    tel: "13800138000",
+                    address: "mars",
+                };
+            } else if (parameters.action == "setuserinfo") {
+                /* ####### ACTION: setuserinfo #######
+                    input 
+                        {
+                            action: "setuserinfo",
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
             } else {
                 reject("unknown action!");
                 return;

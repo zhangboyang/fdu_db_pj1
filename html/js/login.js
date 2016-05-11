@@ -1,3 +1,8 @@
+function lock_login_controls(x)
+{
+    $("#loginform").find("button").prop("disabled", x);
+    $("#loginform").find("input").prop("disabled", x);
+}
 
 var userrole = "user";
 
@@ -5,7 +10,8 @@ function check_session()
 {
     var sdata = get_session_data();
     if (sdata) {
-        $("#loginbtn").text("您已登录").prop("disabled", true);
+        lock_login_controls(true);
+        $("#loginbtn").text("您已登录");
         create_alert("#loginmsgbox", "success", "登录成功", "页面跳转中，请稍候 ...");
         setTimeout(function () {
             jump_to_session(sdata);
@@ -70,7 +76,8 @@ function init_loginform()
         };
         
         $("#loginmsgbox").empty();
-        $("#loginbtn").text("登录中").prop("disabled", true);
+        $("#loginbtn").text("登录中");
+        lock_login_controls(true);
 
         request_data(fdata).then( function (data) {
             if (data.result == "ok") {
@@ -94,7 +101,8 @@ function init_loginform()
                 }, 1000);
             } else if (data.result == "error") {
                 create_alert("#loginmsgbox", "danger", "登录失败", data.reason);
-                $("#loginbtn").text("登录").prop("disabled", false);
+                $("#loginbtn").text("登录");
+                lock_login_controls(false);
             } else {
                 show_error("invalid response data: " + data);
             }

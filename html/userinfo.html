@@ -1,0 +1,58 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>DB PJ</title>
+    
+    <!-- frameworks -->
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie-2.1.1.min.js"></script>
+    
+    <!-- our css and js -->
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/common.js"></script>
+    <script src="js/userinfo.js"></script>
+</head>
+<body>
+
+<!-- body begin -->
+
+<div id="navbarbox">
+</div>
+
+
+
+
+
+
+<div id="restpage" class="container mainbox">
+<div class="page-header">
+<h2>修改个人信息</h2>
+</div>
+
+<div id="userinfoform" class="normalinputbox">
+<p><label for="inputusername">用户名</label><input type="text" name="username" id="inputusername" class="form-control"></p>
+<p><label for="inputpassword">密码</label><input type="password" name="password" id="inputpassword" class="form-control"><!--<span>&nbsp;&nbsp;&nbsp;若不需要修改密码请勿填写</span>--></p>
+<p><label for="inputpassword2">确认密码</label><input type="password" name="password2" id="inputpassword2" class="form-control"><!--<span>&nbsp;&nbsp;&nbsp;若不需要修改密码请勿填写</span>--></p>
+<p><label for="inputtel">手机号码</label><input type="text" name="tel" id="inputtel" class="form-control"></p>
+<p><label for="inputaddress">送餐地址</label><input type="text" name="address" id="inputaddress" class="form-control" placeholder="送餐地址"></p>
+</div>
+
+
+<div id="userinfomsgbox" style="width: 500px; margin-left: 10px; margin-top: 20px;"></div>
+
+<p style="margin-top: 20px; margin-left: 420px"><button type="button" id="submitbtn" class="btn btn-success" onclick="submit_userinfo()">确认修改</button></p>
+
+</div>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

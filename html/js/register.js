@@ -1,3 +1,9 @@
+function lock_reg_controls(x)
+{
+    $("#regform").find("button").prop("disabled", x);
+    $("#regform").find("input").prop("disabled", x);
+}
+
 var userrole = "user";
 
 function init_roleselector()
@@ -64,7 +70,8 @@ function init_regform()
         };
         
         $("#regmsgbox").empty();
-        $("#regbtn").text("注册中").prop("disabled", true);
+        $("#regbtn").text("注册中");
+        lock_reg_controls(true);
 
         request_data(fdata).then( function (data) {
             if (data.result == "ok") {
@@ -87,7 +94,8 @@ function init_regform()
                 }, 1000);
             } else if (data.result == "error") {
                 create_alert("#regmsgbox", "danger", "注册失败", data.reason);
-                $("#regbtn").text("注册").prop("disabled", false);
+                $("#regbtn").text("注册");
+                lock_reg_controls(false);
             } else {
                 show_error("invalid response data: " + data);
             }
@@ -98,6 +106,7 @@ function init_regform()
 }
 
 $(document).ready( function () {
+    init_navbar();
     remove_session_data();
     //init_roleselector();
     init_regform();

@@ -168,7 +168,7 @@ function load_order_list()
 }
 
 $(document).ready( function () {
-    //check_login();
+    check_login();
     init_navbar();
     load_order_list();
 });

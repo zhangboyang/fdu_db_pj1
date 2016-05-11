@@ -124,3 +124,34 @@ nav {
     padding-left: 10px;
     padding-right: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.normalinputbox {
+    width: 100%;
+}
+.normalinputbox label{
+    width: 100px;
+}
+.normalinputbox input {
+    display: inline-block;
+    width: 400px;
+}
