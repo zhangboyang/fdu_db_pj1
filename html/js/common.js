@@ -208,6 +208,75 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                 };
+            } else if (parameters.action == "getorderlist") {
+                /* ####### ACTION: getorderlist #######
+                    input 
+                        action: "getorderlist",
+                        data: [
+                        ]
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: [
+                        {
+                            rid: "qj",
+                            rname: "全家",
+                            oid: 3000,
+                            odatetime: "2016-03-48 32:18",
+                            ostate: "needconfirm",
+                            ocontent: [
+                                { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                                { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面", camount: 7 },
+                            ],
+                        },
+                        {
+                            rid: "qj",
+                            rname: "全家",
+                            oid: 2000,
+                            odatetime: "2016-01-42 12:79",
+                            ostate: "pending",
+                            ocontent: [
+                                { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                                { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 2 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面", camount: 3 },
+                            ],
+                        },
+                        {
+                            rid: "ppxxj",
+                            rname: "泡泡香香鸡",
+                            oid: 1000,
+                            odatetime: "2016-01-32 01:93",
+                            ostate: "delivering",
+                            ocontent: [
+                                { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
+                            ],
+                        },
+                        {
+                            rid: "ppxxj",
+                            rname: "泡泡香香鸡",
+                            oid: 1000,
+                            odatetime: "2015-17-01 38:48",
+                            ostate: "finished",
+                            ocontent: [
+                                { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
+                            ],
+                        },
+                    ],
+                };
+            } else if (parameters.action == "confirmorder") {
+                /* ####### ACTION: confirmorder #######
+                    input 
+                        {
+                            action: "confirmorder",
+                            oid: 123,
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
             } else {
                 reject("unknown action!");
                 return;
