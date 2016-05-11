@@ -3,14 +3,14 @@ var login_timeout_flag = false;
 function do_login_timeout()
 {
     if (!login_timeout_flag) {
-        var h = 53, w = 400;
         create_alert(document.createElement("div"), "danger", "操作失败", "登录超时，请重新登录")
             .appendTo("body")
-            .css("height", h.toString() + "px")
-            .css("width", w.toString() + "px")
+            .css("width", "400px")
             .css("position", "fixed")
-            .css("top", (($(window).height() - h) / 2).toString() + "px")
-            .css("left", (($(window).width() - w) / 2).toString() + "px");
+            .css("left", "50%")
+            .css("top", "50%")
+            .css("transform", "translate(-50%, -50%)");
+
         setTimeout( function () {
             window.location = "login.html";
         }, 1000);

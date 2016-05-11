@@ -1,4 +1,5 @@
 var omsgboxtimeoutid;
+
 function confirm_order(oitem, btnobj)
 {
     $("#backtoorderlistbtn").prop("disabled", true);
