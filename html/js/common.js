@@ -331,6 +331,9 @@ function request_data(parameters)
                     input 
                         {
                             action: "setuserinfo",
+                            password: password,
+                            tel: tel,
+                            address: address,
                         }
                     output example see below
                 */

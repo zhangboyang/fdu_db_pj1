@@ -56,8 +56,11 @@ function init_regform()
             errtext += "请选择一种角色\n";
             failflag = true;
         }
-        create_alert("#regmsgbox", "danger", "注册失败", errtext);
-        if (failflag) return;
+        
+        if (failflag) {
+            create_alert("#regmsgbox", "danger", "注册失败", errtext);
+            return;
+        }
         
         
         var fdata = {
