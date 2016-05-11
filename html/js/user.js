@@ -76,11 +76,14 @@ function load_cuisine_list(robj)
             show_error("getcuisinelist error: " + data.reason);
             return;
         }
-        var rlist = data.data;
-        ordercontent = rlist;
+        var clist = data.data;
+        ordercontent = clist;
         var tobj = $("#cuisinetable").children("tbody");
         tobj.empty();
-        rlist.forEach( function (citem) {
+        if (clist.length == 0) {
+            $("#cuisinetable").children("tbody").html("<tr><td></td><td>暂无数据</td><td></td><td></td></tr>");
+        }
+        clist.forEach( function (citem) {
             citem["camount"] = 0;
             let cobj = citem;
             let amountspan = document.createElement("span");
@@ -140,6 +143,9 @@ function load_rest_list()
         var rlist = data.data;
         var tobj = $("#resttable").children("tbody");
         tobj.empty();
+        if (rlist.length == 0) {
+            $("#resttable").children("tbody").html("<tr><td></td><td>暂无数据</td><td></td></tr>");
+        }
         rlist.forEach( function (ritem) {
             let robj = ritem;
             tobj.append(

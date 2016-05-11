@@ -1,7 +1,8 @@
-function check_login()
+var login_timeout_flag = false;
+
+function do_login_timeout()
 {
-    var sdata = get_session_data();
-    if (!sdata) {
+    if (!login_timeout_flag) {
         var h = 53, w = 400;
         create_alert(document.createElement("div"), "danger", "操作失败", "登录超时，请重新登录")
             .appendTo("body")
@@ -13,6 +14,15 @@ function check_login()
         setTimeout( function () {
             window.location = "login.html";
         }, 1000);
+        login_timeout_flag = true;
+    }
+}
+
+function check_login()
+{
+    var sdata = get_session_data();
+    if (!sdata) {
+        do_login_timeout();
         return false;
     }
     return true;

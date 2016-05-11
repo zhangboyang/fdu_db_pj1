@@ -121,6 +121,9 @@ function load_order_list()
         var olist = data.data;
         var tobj = $("#orderlisttable").children("tbody");
         tobj.empty();
+        if (olist.length == 0) {
+            $("#orderlisttable").children("tbody").html("<tr><td></td><td>暂无数据</td><td></td><td></td><td></td></tr>");
+        }
         olist.forEach( function (oitem) {
             let oobj = oitem;
             var contentobj = $(document.createElement("td"));
