@@ -1,3 +1,60 @@
+function check_login()
+{
+    var sdata = get_session_data();
+    if (!sdata) window.location = "login.html";
+}
+
+function init_navbar()
+{
+    var usernavbar =
+        '<nav class="navbar navbar-fixed-top">'
+        +'  <div class="container">'
+        +'    <div class="navbar-header">'
+        +'      <span class="navbar-brand">欢迎使用外卖系统 - 用户版</span>'
+        +'    </div>'
+        +'    <div id="navbar"><!--'
+        +'      <ul class="nav navbar-nav">'
+        +'        <li><a href="#">Link</a></li>'
+        +'      </ul>-->'
+        +''
+        +'      <ul class="nav navbar-nav navbar-right">'
+        +'        <li><a href="user.html">点餐</a></li>'
+        +'        <li><a href="user-orders.html">我的订单</a></li>'
+        +'        <li><a href="userinfo.html">个人信息</a></li>'
+        +'        <li><a href="logout.html">退出</a></li>'
+        +'      </ul>'
+        +'    </div>'
+        +'  </div>'
+        +'</nav>';
+    var loginnavbar =
+        '<nav class="navbar navbar-fixed-top">'
+        +'  <div class="container">'
+        +'    <div class="navbar-header">'
+        +'      <span class="navbar-brand">欢迎使用外卖系统</span>'
+        +'    </div>'
+        +'    <div id="navbar"><!--'
+        +'      <ul class="nav navbar-nav">'
+        +'        <li><a href="#">Link</a></li>'
+        +'      </ul>-->'
+        +'      <ul class="nav navbar-nav navbar-right">'
+        +'        <li><a href="login.html">登录</a></li>'
+        +'        <li><a href="register.html">注册</a></li>'
+        +'      </ul>'
+        +'    </div>'
+        +'  </div>'
+        +'</nav>';
+        
+    var userrole = "";
+    var sdata = get_session_data();
+    if (sdata) userrole = sdata.userrole;
+    
+    if (userrole == "user") {
+        $("#navbarbox").html(usernavbar);
+    } else {
+        $("#navbarbox").html(loginnavbar);
+    }
+}
+
 function do_logout()
 {
     remove_session_data().then( function () {

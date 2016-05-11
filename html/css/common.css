@@ -22,11 +22,8 @@ nav {
 }
 
 .centerbox {
-    display: flex;
     height: 100%;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+    display: flex;
 }
 
 
@@ -47,6 +44,7 @@ nav {
 
 
 .loginregbox {
+    margin: auto;
     width: 450px;
     padding: 20px 25px;
     background-color: #b3e5fc; /* light-blue lighten-2 */

@@ -105,6 +105,7 @@ function init_loginform()
 }
 
 $(document).ready( function () {
+    init_navbar();
     init_roleselector();
     init_loginform();
     check_session();

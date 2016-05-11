@@ -1,4 +1,4 @@
-var userrole = "";
+var userrole = "user";
 
 function init_roleselector()
 {
@@ -21,6 +21,8 @@ function init_regform()
         var password = $("#inputpassword").val();
         var password2 = $("#inputpassword2").val();
         var rememberme = $("#remembermebox").is(':checked');
+        var tel = $("#inputtel").val();
+        var address = $("#inputaddress").val();
         
         var errtext = ""
         var failflag = false;
@@ -30,6 +32,14 @@ function init_regform()
         }
         if (password == "") {
             errtext += "密码不能为空\n";
+            failflag = true;
+        }
+        if (tel == "") {
+            errtext += "手机号码不能为空\n";
+            failflag = true;
+        }
+        if (address == "") {
+            errtext += "送餐地址不能为空\n";
             failflag = true;
         }
         if (password != password2) {
@@ -48,7 +58,9 @@ function init_regform()
             action: "register",
             username: username,
             password: password,
-            userrole: userrole,
+            //userrole: userrole,
+            tel: tel,
+            address: address,
         };
         
         $("#regmsgbox").empty();
@@ -87,7 +99,7 @@ function init_regform()
 
 $(document).ready( function () {
     remove_session_data();
-    init_roleselector();
+    //init_roleselector();
     init_regform();
 });
 

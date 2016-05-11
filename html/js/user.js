@@ -164,6 +164,8 @@ function load_rest_list()
 }
 
 $(document).ready( function () {
+    check_login();
+    init_navbar();
     $("#restpage").show();
     $("#cuisinepage").hide();
     load_rest_list();
