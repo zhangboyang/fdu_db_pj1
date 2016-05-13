@@ -1,0 +1,102 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>DB PJ</title>
+    
+    <!-- frameworks -->
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie-2.1.1.min.js"></script>
+    
+    <!-- our css and js -->
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/common.js"></script>
+    <script src="js/rest-statistics.js"></script>
+</head>
+<body>
+
+<!-- body begin -->
+
+<div id="navbarbox">
+</div>
+
+
+
+
+
+
+<div id="querypage" class="container mainbox">
+<div class="page-header">
+<h2>查询统计信息</h2>
+</div>
+
+<div id="reststatform" class="normalinputbox">
+<p><label for="inputstatstart">起始日期</label><input type="text" name="statstart" id="inputstatstart" class="form-control"></p>
+<p><label for="inputstatend">结束日期</label><input type="text" name="statend" id="inputstatend" class="form-control"></p>
+
+
+
+<div id="reststatmsgbox" style="width: 500px; margin-left: 10px; margin-top: 20px;"></div>
+
+<p style="margin-top: 20px; margin-left: 10px; margin-bottom: 20px; padding: 0px; width: 500px; text-align: right;">
+<button type="button" id="resetbtn" class="btn btn-default" onclick="reset_reststat_form()">重置</button>
+<button type="button" id="submitbtn" class="btn btn-success" onclick="query_statistics()">提交查询</button>
+</p>
+</div>
+</div>
+
+<div id="resultpage" class="container mainbox">
+<div class="page-header">
+<div style="display: inline-block; vertical-align: top; margin-top: -1px;">
+<button type="button" id="backtoinputbtn" class="btn btn-lg btn-default" style="border-radius: 50%; padding: 0px; height: 40px; width: 40px; line-height: 100%;" onclick="reset_reststat_form()">
+<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+</button>
+</div>
+<div style="display: inline-block; height: 43px;">
+<h2 style="display: inline;">
+&nbsp;&nbsp;查询结果
+</h2>
+</div>
+</div>
+
+
+<div style="padding: 10px; margin-bottom: 10px;">
+<p><strong style="display: inline-block; vertical-align: top;">查询起始日期：</strong><span id="od_start"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">查询结束日期：</strong><span id="od_end"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">期间总营业额：</strong><span id="od_revenue"></span></p>
+</div>
+
+<p>
+<strong style="display: inline-block; vertical-align: top;">最热门菜品：</strong>
+</p>
+<p>
+<table id="cuisinetable" class="table table-striped">
+<thead>
+<tr>
+<th width="30%">菜名</th>
+<th>简介</th>
+<th width="15%">单价</th>
+<th width="15%">销售数量</th>
+<th width="15%">合计金额</th>
+</tr>
+</thead>
+<tbody>
+<!-- cuisine list will dynamicly generated here -->
+</tbody>
+</table>
+
+<p id="ordertotal" style="text-align: right; padding-right: 20px"></p>
+<p style="text-align: right; padding-right: 20px">
+<button type="button" id="backtoinputbtn2" class="btn btn-default" onclick="reset_reststat_form()">返回</button>
+</p>
+</div>
+
+</div>
+
+
+
+
+</div>
+</body>
+</html>

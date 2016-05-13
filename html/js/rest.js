@@ -50,6 +50,10 @@ function select_order_deliever(oitem)
         create_alert("#selectdelievermsgbox", "danger", "确认失败", errtext);
         return;
     }
+    
+    if (!confirm("您确认将此订单交由 " + delieverlist[dlid].delievername + " 配送并支付配送费 " + parseFloat(dfee).toFixed(2) + " 元吗？"))
+        return;
+    
     $("#confirmbtn").text("正在提交");
     $("#confirmbtn").prop("disabled", true);
     $("#selectdelieverbox").find("select").prop("disabled", true);
@@ -161,7 +165,7 @@ function load_order_list()
         var tobj = $("#orderlisttable").children("tbody");
         tobj.empty();
         if (olist.length == 0) {
-            $("#orderlisttable").children("tbody").html("<tr><td></td><td>暂无数据</td><td></td><td></td><td></td></tr>");
+            $("#orderlisttable").children("tbody").html("<tr><td></td><td>暂无数据</td><td></td><td></td><td></td><td></td></tr>");
         }
         olist.forEach( function (oitem) {
             let oobj = oitem;

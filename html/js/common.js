@@ -65,8 +65,8 @@ function init_navbar()
         +''
         +'      <ul class="nav navbar-nav navbar-right">'
         +'        <li><a href="rest.html">最近订单</a></li>'
-        +'        <li><a href="user-orders.html">编辑菜单</a></li>'
-        +'        <li><a href="user-orders.html">查看统计</a></li>'
+        +'        <li><a href="rest-editmenu.html">编辑菜单</a></li>'
+        +'        <li><a href="rest-statistics.html">查看统计</a></li>'
 //        +'        <li><a href="userinfo.html">个人信息</a></li>'
         +'        <li><a href="logout.html">退出</a></li>'
         +'      </ul>'
@@ -154,7 +154,7 @@ function save_session_data(sdata)
 function show_error(str)
 {
     console.log("error: " + str);
-    make_popup_msgbox(create_alert(document.createElement("div"), "danger", "错误", "请刷新页面后重试\n" + str));
+    make_popup_msgbox(create_alert(document.createElement("div"), "danger", "错误", str + "\n请刷新页面后重试\n"));
 }
 /*
     universal data requester
@@ -255,7 +255,7 @@ function request_data(parameters)
                     data: [
                         { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭" },
                         { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团" },
-                        { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面" },
+                        { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！" },
                     ],
                 };
             } else if (parameters.action == "getdelieverlist") {
@@ -318,7 +318,7 @@ function request_data(parameters)
                             ocontent: [
                                 { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
                                 { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
-                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面", camount: 7 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
                             ],
                         },
                         {
@@ -330,7 +330,7 @@ function request_data(parameters)
                             ocontent: [
                                 { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
                                 { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 2 },
-                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面", camount: 3 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 3 },
                             ],
                         },
                         {
@@ -376,7 +376,7 @@ function request_data(parameters)
                             ocontent: [
                                 { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
                                 { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
-                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面", camount: 7 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
                             ],
                         },
                         {
@@ -432,6 +432,25 @@ function request_data(parameters)
                 */
                 data = {
                     result: "ok",
+                };
+            } else if (parameters.action == "getreststatistics") {
+                /* ####### ACTION: getreststatistics #######
+                    input 
+                        {
+                            action: "getreststatistics",
+                            statstart: qstart,
+                            statend: qend,
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    revenue: "12345.67",
+                    popularcuisine: [
+                        { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                        { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
+                        { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
+                    ]
                 };
             } else {
                 reject("unknown action!");
