@@ -1,16 +1,18 @@
-var login_timeout_flag = false;
-
-function do_login_timeout()
+function make_popup_msgbox(obj)
 {
-    if (!login_timeout_flag) {
-        create_alert(document.createElement("div"), "danger", "操作失败", "登录超时，请重新登录")
-            .appendTo("body")
+    return obj.appendTo("body")
             .css("width", "400px")
             .css("position", "fixed")
             .css("left", "50%")
             .css("top", "50%")
             .css("transform", "translate(-50%, -50%)");
+}
 
+var login_timeout_flag = false;
+function do_login_timeout()
+{
+    if (!login_timeout_flag) {
+        make_popup_msgbox(create_alert(document.createElement("div"), "danger", "操作失败", "登录超时，请重新登录"));
         setTimeout( function () {
             window.location = "login.html";
         }, 1000);
@@ -44,7 +46,7 @@ function init_navbar()
         +'      <ul class="nav navbar-nav navbar-right">'
         +'        <li><a href="user.html">点餐</a></li>'
         +'        <li><a href="user-orders.html">我的订单</a></li>'
-        +'        <li><a href="userinfo.html">个人信息</a></li>'
+        +'        <li><a href="user-info.html">个人信息</a></li>'
         +'        <li><a href="logout.html">退出</a></li>'
         +'      </ul>'
         +'    </div>'
@@ -152,6 +154,7 @@ function save_session_data(sdata)
 function show_error(str)
 {
     console.log("error: " + str);
+    make_popup_msgbox(create_alert(document.createElement("div"), "danger", "错误", "请刷新页面后重试\n" + str));
 }
 /*
     universal data requester
