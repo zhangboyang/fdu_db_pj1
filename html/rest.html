@@ -1,0 +1,141 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>DB PJ</title>
+    
+    <!-- frameworks -->
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie-2.1.1.min.js"></script>
+    
+    <!-- our css and js -->
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/common.js"></script>
+    <script src="js/rest.js"></script>
+</head>
+<body>
+
+<!-- body begin -->
+
+<div id="navbarbox">
+</div>
+
+
+
+
+
+
+<div id="orderlistpage" class="container mainbox">
+<div class="page-header">
+<div style="display: inline-block; height: 43px; width: 75%">
+<h2 style="display: inline;">最近订单</h2>
+</div>
+<div style="display: inline-block;">
+<div id="omsgbox" style="position: absolute; width: 160px; margin-top: -40px;">
+</div>
+</div>
+</div>
+
+<p>
+<table id="orderlisttable" class="table table-striped">
+<thead>
+<tr>
+<th>订单内容</th>
+<th width="17%">下单时间</th>
+<th width="15%">客户姓名</th>
+<th width="15%">配送员</th>
+<th width="12%">订单状态</th>
+<th width="13%">操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- list will dynamicly generated here -->
+</tbody>
+</table>
+</p>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="orderdetailpage" class="container mainbox">
+<div class="page-header">
+<div style="display: inline-block; vertical-align: top; margin-top: -1px;">
+<button type="button" id="backtoorderlistbtn" class="btn btn-lg btn-default" style="border-radius: 50%; padding: 0px; height: 40px; width: 40px; line-height: 100%;" onclick="load_order_list()">
+<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+</button>
+</div>
+<div style="display: inline-block; height: 43px;">
+<h2 style="display: inline;">
+&nbsp;&nbsp;订单详情
+</h2>
+</div>
+</div>
+
+
+<div style="padding: 10px; margin-bottom: 10px;">
+<p><strong style="display: inline-block; vertical-align: top;">客户姓名：</strong><span id="od_consumername"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">客户电话：</strong><span id="od_consumertel"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">客户地址：</strong><span id="od_consumeraddr"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">配送员：</strong><span id="od_delievername"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">下单时间：</strong><span id="od_odatetime"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">订单状态：</strong><span id="od_stat"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">金额总计：</strong><span id="od_total"></span></p>
+</div>
+
+
+<p>
+<strong style="display: inline-block; vertical-align: top;">订单内容：</strong>
+</p>
+<p>
+<table id="cuisinetable" class="table table-striped">
+<thead>
+<tr>
+<th width="30%">菜名</th>
+<th>简介</th>
+<th width="15%">单价</th>
+<th width="15%">份数</th>
+<th width="15%">合计</th>
+</tr>
+</thead>
+<tbody>
+<!-- cuisine list will dynamicly generated here -->
+</tbody>
+</table>
+</p>
+
+<div id="selectdelieverbox">
+<p>
+<strong style="display: inline-block; vertical-align: top;">选择配送员：</strong>
+</p>
+<div class="normalinputbox" style="margin-left: 20px;">
+<p><label for="inputdeliever">配送员</label><select id="inputdeliever" class="form-control"></select></p>
+<p><label for="inputfee">送餐费</label><input type="text" name="fee" id="inputfee" class="form-control" placeholder="您想为此单支付给配送员的费用"></p>
+</div>
+</div>
+
+<div id="selectdelievermsgbox" style="width: 500px; margin-left: 30px; margin-top: 20px;"></div>
+
+
+<div style="padding-left: 70%;"><div id="submitordermsgbox"></div></div>
+<p id="ordertotal" style="text-align: right; padding-right: 20px"></p>
+<p style="text-align: right; padding-right: 20px">
+<button type="button" id="backtoorderlistbtn2" class="btn btn-default" onclick="load_order_list()">返回</button>
+<button type="button" id="confirmbtn" class="btn btn-success">确认配送员</button>
+</p>
+</div>
+
+
+
+</body>
+</html>

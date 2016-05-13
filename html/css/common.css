@@ -155,3 +155,7 @@ nav {
     display: inline-block;
     width: 400px;
 }
+.normalinputbox select {
+    display: inline-block;
+    width: 400px;
+}

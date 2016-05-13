@@ -1,48 +1,106 @@
 var omsgboxtimeoutid;
 
-function confirm_order(oitem, btnobj)
+var delieverlist;
+
+function load_deliever_list()
 {
-    if (!confirm("您确定要确认此订单吗？")) return;
-    $("#backtoorderlistbtn").prop("disabled", true);
-    $("#backtoorderlistbtn2").prop("disabled", true);
-    $(btnobj).text("正在确认");
-    $("#orderlisttable").find("button").prop("disabled", true);
-    $("#confirmbtn").prop("disabled", true);
+    var dlistobj = $("#inputdeliever");
+    dlistobj.prop("disabled", true);
+    dlistobj.html('<option value="-1" selected>请选择</option>');
     request_data({
-        action: "confirmorder",
+        action: "getdelieverlist",
+    }).then( function (data) {
+        if (data.result != "ok") {
+            show_error("getdelieverlist error: " + data.reason);
+            return;
+        }
+        delieverlist = data.data;
+        for (var i = 0; i < delieverlist.length; i++) {
+            var ditem = delieverlist[i];
+            dlistobj.append(
+                $(document.createElement("option"))
+                    .attr("value", i.toString())
+                    .text(ditem.delievername)
+            );
+        }
+    }, function (reason) {
+        show_error("can't get deliever list: " + reason);
+    });
+    
+    dlistobj.prop("disabled", false);
+}
+
+
+function select_order_deliever(oitem)
+{
+    $("#selectdelievermsgbox").empty();
+    var dlid = $("#inputdeliever").val(); // deliever index in list
+    var dfee = $("#inputfee").val();
+    var errtext = ""
+    var failflag = false;
+    if (parseInt(dlid) == -1) {
+        errtext += "请选择一个配送员\n";
+        failflag = true;
+    }
+    if (dfee == "") {
+        errtext += "请输入配送费\n";
+        failflag = true;
+    }
+    if (failflag) {
+        create_alert("#selectdelievermsgbox", "danger", "确认失败", errtext);
+        return;
+    }
+    $("#confirmbtn").text("正在提交");
+    $("#confirmbtn").prop("disabled", true);
+    $("#selectdelieverbox").find("select").prop("disabled", true);
+    $("#selectdelieverbox").find("input").prop("disabled", true);
+    
+    request_data({
+        action: "setorderdeliever",
         oid: oitem.oid,
+        delieverid: delieverlist[dlid].delieverid,
+        delieverfee: parseFloat(dfee),
     }).then(function (data) {
         if (data.result != "ok") {
-            show_error("confirmorder error: " + data.reason);
+            show_error("setorderdeliever error: " + data.reason);
             return;
         }
         load_order_list();
-        create_alert("#omsgbox", "success", "订单确认成功", "");
+        create_alert("#omsgbox", "success", "配送员选择成功", "");
         clearTimeout(omsgboxtimeoutid);
         omsgboxtimeoutid = setTimeout(function () {
             $("#omsgbox").empty();
         }, 5000);
     }, function (reason) {
-        show_error("can't confirm order list: " + reason);
+        show_error("can't set order deliever: " + reason);
     });
 }
 
 function show_order_detail(oitem)
 {
-    if (is_user_confirmable(oitem.ostate)) {
+    if (is_rest_confirmable(oitem.ostate)) {
         $("#confirmbtn").show();
+        $("#selectdelieverbox").show();
     } else {
         $("#confirmbtn").hide();
+        $("#selectdelieverbox").hide();
     }
     $("#omsgbox").empty();
     $("#backtoorderlistbtn").prop("disabled", false);
     $("#backtoorderlistbtn2").prop("disabled", false);
-    $("#confirmbtn").prop("disabled", false).text("确认订单");
+    $("#confirmbtn").prop("disabled", false).text("选择配送员");
+    $("#selectdelieverbox").find("select").prop("disabled", false).val("-1");
+    $("#selectdelieverbox").find("input").prop("disabled", false).val("");
     $("#orderlistpage").hide();
     $("#orderdetailpage").show();
-    $("#od_rname").text(oitem.rname);
+    
+    $("#od_consumername").text(oitem.oconsumername);
+    $("#od_consumertel").text(oitem.oconsumertel);
+    $("#od_consumeraddr").text(oitem.oconsumeraddr);
+    $("#od_delievername").text(oitem.odelievername);
     $("#od_odatetime").text(oitem.odatetime);
     $("#od_stat").text(ostat2str(oitem.ostate));
+    
     var tobj = $("#cuisinetable").children("tbody");
     tobj.empty();
     var ototal = 0, ototalcnt = 0;
@@ -81,7 +139,7 @@ function show_order_detail(oitem)
                     .text(ototal.toFixed(2))))
     );
     $("#confirmbtn").unbind("click").click( function () {
-        confirm_order(oitem, this);
+        select_order_deliever(oitem, this);
     });
 }
 
@@ -91,12 +149,12 @@ function load_order_list()
     $("#orderlistpage").show();
     $("#orderdetailpage").hide();
     
-    $("#orderlisttable").children("tbody").html("<tr><td></td><td>加载中 ...</td><td></td><td></td><td></td></tr>");
+    $("#orderlisttable").children("tbody").html("<tr><td></td><td>加载中 ...</td><td></td><td></td><td></td><td></td></tr>");
     request_data({
-        action: "getorderlist",
+        action: "getrestorderlist",
     }).then( function (data) {
         if (data.result != "ok") {
-            show_error("getorderlist error: " + data.reason);
+            show_error("getrestorderlist error: " + data.reason);
             return;
         }
         var olist = data.data;
@@ -115,34 +173,27 @@ function load_order_list()
                     .appendTo(contentobj);
             });
             var actionobj = $(document.createElement("td"));
+            var confirmable = is_rest_confirmable(oitem.ostate);
+            if (confirmable) oitem["odelievername"] = "待选择";
+            
             $(document.createElement("button"))
                 .attr("type", "button")
-                .addClass("btn btn-sm btn-default")
-                .text("查看详情")
+                .addClass("btn btn-sm")
+                .addClass(confirmable ? "btn-success" : "btn-default")
+                .text(confirmable ? "选择配送员" : "查看详情")
                 .click( function () {
                     show_order_detail(oobj);
                 }).appendTo(actionobj);
-                
-            if (is_user_confirmable(oitem.ostate)) {
-                $(document.createElement("span"))
-                    .html("&nbsp;&nbsp;")
-                    .appendTo(actionobj);
-                $(document.createElement("button"))
-                    .attr("type", "button")
-                    .addClass("btn btn-sm btn-success")
-                    .text("确认订单")
-                    .click( function () {
-                        confirm_order(oobj, this);
-                    }).appendTo(actionobj);
-            }
             
             tobj.append(
                 $(document.createElement("tr"))
-                    .append($(document.createElement("td"))
-                        .text(oitem.rname))
                     .append(contentobj)
                     .append($(document.createElement("td"))
                         .text(oitem.odatetime))
+                    .append($(document.createElement("td"))
+                        .text(oitem.oconsumername))
+                    .append($(document.createElement("td"))
+                        .text(oitem.odelievername))
                     .append($(document.createElement("td"))
                         .text(ostat2str(oitem.ostate)))
                     .append(actionobj)
@@ -153,8 +204,10 @@ function load_order_list()
     });
 }
 
+
 $(document).ready( function () {
     check_login();
     init_navbar();
+    load_deliever_list();
     load_order_list();
 });

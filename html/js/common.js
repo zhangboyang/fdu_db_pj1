@@ -50,6 +50,27 @@ function init_navbar()
         +'    </div>'
         +'  </div>'
         +'</nav>';
+    var restnavbar =
+        '<nav class="navbar navbar-fixed-top">'
+        +'  <div class="container">'
+        +'    <div class="navbar-header">'
+        +'      <span class="navbar-brand">欢迎使用外卖系统 - 餐厅版</span>'
+        +'    </div>'
+        +'    <div id="navbar"><!--'
+        +'      <ul class="nav navbar-nav">'
+        +'        <li><a href="#">Link</a></li>'
+        +'      </ul>-->'
+        +''
+        +'      <ul class="nav navbar-nav navbar-right">'
+        +'        <li><a href="rest.html">最近订单</a></li>'
+        +'        <li><a href="user-orders.html">编辑菜单</a></li>'
+        +'        <li><a href="user-orders.html">查看统计</a></li>'
+//        +'        <li><a href="userinfo.html">个人信息</a></li>'
+        +'        <li><a href="logout.html">退出</a></li>'
+        +'      </ul>'
+        +'    </div>'
+        +'  </div>'
+        +'</nav>';
     var loginnavbar =
         '<nav class="navbar navbar-fixed-top">'
         +'  <div class="container">'
@@ -74,6 +95,8 @@ function init_navbar()
     
     if (userrole == "user") {
         $("#navbarbox").html(usernavbar);
+    } else if (userrole == "rest") {
+        $("#navbarbox").html(restnavbar);
     } else {
         $("#navbarbox").html(loginnavbar);
     }
@@ -139,6 +162,7 @@ function request_data(parameters)
     switch (parameters.action) {
         case "login":
         case "register":
+        case "logout":
             request_login = false;
     }
     
@@ -171,7 +195,7 @@ function request_data(parameters)
                     data = {
                         result: "ok",
                         sessionid: "ahfakjsdhfkjafhdksja",
-                        sessionlife: "60", /* in seconds */
+                        sessionlife: "3600", /* in seconds */
                     }
                 } else {
                     data = {
@@ -231,12 +255,40 @@ function request_data(parameters)
                         { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面" },
                     ],
                 };
+            } else if (parameters.action == "getdelieverlist") {
+                /* ####### ACTION: getdelieverlist #######
+                    input 
+                        action: "getdelieverlist",
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: [
+                        { delieverid: 1111, delievername: "送餐员甲", delievertel: "110" },
+                        { delieverid: 2222, delievername: "送餐员乙", delievertel: "120" },
+                        { delieverid: 3333, delievername: "送餐员丙", delievertel: "130" },
+                    ],
+                };
             } else if (parameters.action == "submitorder") {
-                /* ####### ACTION: getrestlist #######
+                /* ####### ACTION: submitorder #######
                     input 
                         {
                             action: "submitorder",
                             data: olist,
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "setorderdeliever") {
+                /* ####### ACTION: setorderdeliever #######
+                    input 
+                        {
+                            action: "setorderdeliever",
+                            oid: oitem.oid,
+                            delieverid: delieverlist[dlid].delieverid,
+                            delieverfee: parseFloat(dfee),
                         }
                     output example see below
                 */
@@ -294,6 +346,44 @@ function request_data(parameters)
                             oid: 1000,
                             odatetime: "2015-17-01 38:48",
                             ostate: "finished",
+                            ocontent: [
+                                { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
+                            ],
+                        },
+                    ],
+                };
+            } else if (parameters.action == "getrestorderlist") {
+                /* ####### ACTION: getrestorderlist #######
+                    input 
+                        action: "getrestorderlist",
+                        data: [
+                        ]
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: [
+                        {
+                            oid: 3000,
+                            odatetime: "2016-03-48 32:18",
+                            ostate: "pending",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            ocontent: [
+                                { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                                { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "奇怪的凉面", camount: 7 },
+                            ],
+                        },
+                        {
+                            oid: 1000,
+                            odatetime: "2016-01-32 01:93",
+                            ostate: "delivering",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odelievername: "张三",
                             ocontent: [
                                 { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
                             ],
@@ -371,4 +461,41 @@ function create_alert(selector, type, title, content)
                 .css("display", "inline-block")
                 .text(content))
     );
+}
+
+
+
+function ostat2str(stat)
+{
+    //   ->   制作中      ->      运送中    ->     已完成
+    // 用户下单       餐厅选择配送员        用户确认
+    switch (stat) {
+        case "finished": return "已完成";
+        case "pending": return "制作中";
+        case "needconfirm": return "待确认";
+        case "delivering": return "运送中";
+        default: return "未知 (" + stat + ")";
+    }
+}
+
+function is_user_confirmable(stat)
+{
+    switch (stat) {
+        case "pending":
+        case "needconfirm":
+        case "delivering":
+            return true;
+        default:
+            return false;
+    }
+}
+
+function is_rest_confirmable(stat)
+{
+    switch (stat) {
+        case "pending":
+            return true;
+        default:
+            return false;
+    }
 }
