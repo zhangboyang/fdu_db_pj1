@@ -1,0 +1,65 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>DB PJ</title>
+    
+    <!-- frameworks -->
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie-2.1.1.min.js"></script>
+    
+    <!-- our css and js -->
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/common.js"></script>
+    <script src="js/rest-editmenu.js"></script>
+</head>
+<body>
+
+<!-- body begin -->
+
+<div id="navbarbox">
+</div>
+
+
+
+
+
+
+<div id="editmenupage" class="container mainbox">
+
+<div class="page-header">
+<h2>编辑菜单</h2>
+</div>
+
+<p id="restdescarea" style="height: 50px; line-height: 50px;">
+<strong style="display: inline-block;">餐厅简介：</strong>
+<span id="restdesc"></span>
+<input type="text" name="restdesc" id="inputrestdesc" class="form-control" style="width: 40%; display: inline-block;">
+&nbsp;&nbsp;&nbsp;
+<button type="button" id="editdescbtn" class="btn btn-sm btn-default" onclick="edit_restdesc()">修改</button>
+<button type="button" id="editdescconfirmbtn" class="btn btn-sm btn-success" onclick="edit_restdesc_confirm()">确定</button>
+<button type="button" id="editdesccancelbtn" class="btn btn-sm btn-default" onclick="edit_restdesc_cancel()">取消</button>
+</p>
+
+<p>
+<table id="cuisinetable" class="table table-striped">
+<thead>
+<tr>
+<th width="30%">菜名</th>
+<th>简介</th>
+<th width="15%">单价</th>
+<th width="15%">操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- cuisine list will dynamicly generated here -->
+</tbody>
+</table>
+</p>
+
+</div>
+
+
+</body>
+</html>

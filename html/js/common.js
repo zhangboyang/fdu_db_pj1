@@ -465,6 +465,74 @@ function request_data(parameters)
                         { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
                     ]
                 };
+            } else if (parameters.action == "getrestcuisinelist") {
+                /* ####### ACTION: getrestcuisinelist #######
+                    input 
+                        action: "getrestcuisinelist",
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    rdesc: "盖罗娇的山中野店，酒和菜都是西南边疆的特产",
+                    data: [
+                        { cid: "cnmt", cname: "陈年茅台", cprice: "12.34", cdesc: "小店远近驰名的陈年茅台" },
+                        { cid: "mzxht", cname: "蜜汁熏火腿", cprice: "45.67", cdesc: "小店最拿手的蜜汁熏火腿" },
+                    ],
+                };
+            } else if (parameters.action == "createcuisine") {
+                /* ####### ACTION: createcuisine #######
+                    input 
+                        action: "createcuisine",
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data:
+                        { cid: "newcuisine", cname: "新菜品", cprice: "1.00", cdesc: "请填入菜品简介" }
+                };
+            } else if (parameters.action == "deletecuisine") {
+                /* ####### ACTION: deletecuisine #######
+                    input 
+                        action: "deletecuisine",
+                        cid: cuisine id,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "getrestdesc") {
+                /* ####### ACTION: getrestdesc #######
+                    input 
+                        action: "getrestdesc",
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    rdesc: "盖罗娇的山中野店，酒和菜都是西南边疆的特产",
+                };
+            } else if (parameters.action == "setrestdesc") {
+                /* ####### ACTION: setrestdesc #######
+                    input 
+                        action: "setrestdesc",
+                        rdesc: "newdesc"
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "setcuisineinfo") {
+                /* ####### ACTION: setrestdesc #######
+                    input 
+                        action: "setcuisineinfo",
+                        cid: citem.cid,
+                        cname: newcname,
+                        cdesc: newcdesc,
+                        cprice: newcprice,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
             } else {
                 reject("unknown action!");
                 return;
