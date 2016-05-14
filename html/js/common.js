@@ -123,9 +123,9 @@ function get_session_data()
 
 function remove_session_data()
 {
+    var sdata = get_session_data();
+    Cookies.remove("sessiondata");
     return new Promise ( function (resolve, reject) {
-        var sdata = get_session_data();
-        Cookies.remove("sessiondata");
         if (sdata) {
             request_data({
                 action: "logout",
@@ -154,7 +154,9 @@ function save_session_data(sdata)
 function show_error(str)
 {
     console.log("error: " + str);
-    make_popup_msgbox(create_alert(document.createElement("div"), "danger", "错误", str + "\n请刷新页面后重试\n"));
+    if (!login_timeout_flag) {
+        make_popup_msgbox(create_alert(document.createElement("div"), "danger", "错误", str + "\n请刷新页面后重试\n"));
+    }
 }
 /*
     universal data requester
@@ -206,6 +208,17 @@ function request_data(parameters)
                         reason: "错误的用户名或密码",
                     }
                 }
+            } else if (parameters.action == "logout") {
+                /* ####### ACTION: logout #######
+                    input 
+                        {
+                            action: "logout",
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
             } else if (parameters.action == "register") {
                 /*
                     ####### ACTION: register #######
@@ -253,7 +266,7 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                     data: [
-                        { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭" },
+                        { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭" },
                         { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团" },
                         { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！" },
                     ],
@@ -316,7 +329,7 @@ function request_data(parameters)
                             odatetime: "2016-03-48 32:18",
                             ostate: "needconfirm",
                             ocontent: [
-                                { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                                { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
                                 { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
                                 { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
                             ],
@@ -328,7 +341,7 @@ function request_data(parameters)
                             odatetime: "2016-01-42 12:79",
                             ostate: "pending",
                             ocontent: [
-                                { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                                { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
                                 { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 2 },
                                 { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 3 },
                             ],
@@ -374,7 +387,7 @@ function request_data(parameters)
                             oconsumertel: "13800138000",
                             oconsumeraddr: "mars",
                             ocontent: [
-                                { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                                { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
                                 { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
                                 { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
                             ],
@@ -447,7 +460,7 @@ function request_data(parameters)
                     result: "ok",
                     revenue: "12345.67",
                     popularcuisine: [
-                        { cid: "dbf", cname: "茄汁嫩鸡蛋包饭", cprice: "14.30", cdesc: "普通蛋包饭", camount: 1 },
+                        { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
                         { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
                         { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
                     ]

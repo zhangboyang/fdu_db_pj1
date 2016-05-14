@@ -109,8 +109,8 @@ function init_regform()
 }
 
 $(document).ready( function () {
-    init_navbar();
     remove_session_data();
+    init_navbar();
     //init_roleselector();
     init_regform();
 });
