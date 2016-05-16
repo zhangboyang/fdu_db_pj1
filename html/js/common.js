@@ -73,6 +73,26 @@ function init_navbar()
         +'    </div>'
         +'  </div>'
         +'</nav>';
+    var deliverernavbar =
+        '<nav class="navbar navbar-fixed-top">'
+        +'  <div class="container">'
+        +'    <div class="navbar-header">'
+        +'      <span class="navbar-brand">欢迎使用外卖系统 - 送餐员版</span>'
+        +'    </div>'
+        +'    <div id="navbar"><!--'
+        +'      <ul class="nav navbar-nav">'
+        +'        <li><a href="#">Link</a></li>'
+        +'      </ul>-->'
+        +''
+        +'      <ul class="nav navbar-nav navbar-right">'
+        +'        <li><a href="deliverer.html">最近订单</a></li>'
+        +'        <li><a href="deliverer-statistics.html">查看统计</a></li>'
+//        +'        <li><a href="userinfo.html">个人信息</a></li>'
+        +'        <li><a href="logout.html">退出</a></li>'
+        +'      </ul>'
+        +'    </div>'
+        +'  </div>'
+        +'</nav>';
     var loginnavbar =
         '<nav class="navbar navbar-fixed-top">'
         +'  <div class="container">'
@@ -99,6 +119,8 @@ function init_navbar()
         $("#navbarbox").html(usernavbar);
     } else if (userrole == "rest") {
         $("#navbarbox").html(restnavbar);
+    } else if (userrole == "deliverer") {
+        $("#navbarbox").html(deliverernavbar);
     } else {
         $("#navbarbox").html(loginnavbar);
     }
@@ -180,6 +202,27 @@ function request_data(parameters)
     console.log("REQUEST: " + JSON.stringify(parameters));
     // FIXME: get some data
     
+    var url = "";
+    switch (parameters.action) {
+        case "getrestlist":
+            url = "RestServlet";
+            break;
+    }
+    
+    ///
+    
+    if (url != "") {
+        url = "/db/" + url;
+        return new Promise ( function (resolve, reject) {
+            $.post(url, parameters, null, "json").done( function (data, textStatus, jqXHR) {
+                resolve(data);
+            }).fail( function (xhr, textStatus, errorThrown) {
+                reject("post to " + url + " failed: " + textStatus + ", " + errorThrown);
+            });
+        });
+    }
+    
+    // the FAKE data generator
     return new Promise ( function (resolve, reject) {
         setTimeout( function () {
             var data;
@@ -271,18 +314,18 @@ function request_data(parameters)
                         { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！" },
                     ],
                 };
-            } else if (parameters.action == "getdelieverlist") {
-                /* ####### ACTION: getdelieverlist #######
+            } else if (parameters.action == "getdelivererlist") {
+                /* ####### ACTION: getdelivererlist #######
                     input 
-                        action: "getdelieverlist",
+                        action: "getdelivererlist",
                     output example see below
                 */
                 data = {
                     result: "ok",
                     data: [
-                        { delieverid: 1111, delievername: "送餐员甲", delievertel: "110" },
-                        { delieverid: 2222, delievername: "送餐员乙", delievertel: "120" },
-                        { delieverid: 3333, delievername: "送餐员丙", delievertel: "130" },
+                        { delivererid: 1111, deliverername: "送餐员甲", deliverertel: "110" },
+                        { delivererid: 2222, deliverername: "送餐员乙", deliverertel: "120" },
+                        { delivererid: 3333, deliverername: "送餐员丙", deliverertel: "130" },
                     ],
                 };
             } else if (parameters.action == "submitorder") {
@@ -297,14 +340,14 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                 };
-            } else if (parameters.action == "setorderdeliever") {
-                /* ####### ACTION: setorderdeliever #######
+            } else if (parameters.action == "setorderdeliverer") {
+                /* ####### ACTION: setorderdeliverer #######
                     input 
                         {
-                            action: "setorderdeliever",
+                            action: "setorderdeliverer",
                             oid: oitem.oid,
-                            delieverid: delieverlist[dlid].delieverid,
-                            delieverfee: parseFloat(dfee),
+                            delivererid: delivererlist[dlid].delivererid,
+                            delivererfee: parseFloat(dfee),
                         }
                     output example see below
                 */
@@ -399,7 +442,46 @@ function request_data(parameters)
                             oconsumername: "王五",
                             oconsumertel: "13800138000",
                             oconsumeraddr: "mars",
-                            odelievername: "张三",
+                            odeliverername: "张三",
+                            ocontent: [
+                                { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
+                            ],
+                        },
+                    ],
+                };
+            } else if (parameters.action == "getdelivererorderlist") {
+                /* ####### ACTION: getdelivererorderlist #######
+                    input 
+                        action: "getdelivererorderlist",
+                        data: [
+                        ]
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: [
+                        {
+                            oid: 3000,
+                            odatetime: "2016-03-48 32:18",
+                            ostate: "pending",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odelivererfee: 10.00,
+                            ocontent: [
+                                { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
+                                { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
+                            ],
+                        },
+                        {
+                            oid: 1000,
+                            odatetime: "2016-01-32 01:93",
+                            ostate: "finished",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odelivererfee: 20.00,
                             ocontent: [
                                 { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
                             ],
@@ -528,6 +610,16 @@ function request_data(parameters)
                         cname: newcname,
                         cdesc: newcdesc,
                         cprice: newcprice,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "delivererconfirm") {
+                /* ####### ACTION: delivererconfirm #######
+                    input 
+                        action: "delivererconfirm",
+                        cid: citem.cid,
                     output example see below
                 */
                 data = {

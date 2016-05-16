@@ -1,40 +1,40 @@
 var omsgboxtimeoutid;
 
-var delieverlist;
+var delivererlist;
 
-function load_deliever_list()
+function load_deliverer_list()
 {
-    var dlistobj = $("#inputdeliever");
+    var dlistobj = $("#inputdeliverer");
     dlistobj.prop("disabled", true);
     dlistobj.html('<option value="-1" selected>请选择</option>');
     request_data({
-        action: "getdelieverlist",
+        action: "getdelivererlist",
     }).then( function (data) {
         if (data.result != "ok") {
-            show_error("getdelieverlist error: " + data.reason);
+            show_error("getdelivererlist error: " + data.reason);
             return;
         }
-        delieverlist = data.data;
-        for (var i = 0; i < delieverlist.length; i++) {
-            var ditem = delieverlist[i];
+        delivererlist = data.data;
+        for (var i = 0; i < delivererlist.length; i++) {
+            var ditem = delivererlist[i];
             dlistobj.append(
                 $(document.createElement("option"))
                     .attr("value", i.toString())
-                    .text(ditem.delievername)
+                    .text(ditem.deliverername)
             );
         }
     }, function (reason) {
-        show_error("can't get deliever list: " + reason);
+        show_error("can't get deliverer list: " + reason);
     });
     
     dlistobj.prop("disabled", false);
 }
 
 
-function select_order_deliever(oitem)
+function select_order_deliverer(oitem)
 {
-    $("#selectdelievermsgbox").empty();
-    var dlid = $("#inputdeliever").val(); // deliever index in list
+    $("#selectdeliverermsgbox").empty();
+    var dlid = $("#inputdeliverer").val(); // deliverer index in list
     var dfee = $("#inputfee").val();
     var errtext = ""
     var failflag = false;
@@ -47,26 +47,26 @@ function select_order_deliever(oitem)
         failflag = true;
     }
     if (failflag) {
-        create_alert("#selectdelievermsgbox", "danger", "确认失败", errtext);
+        create_alert("#selectdeliverermsgbox", "danger", "确认失败", errtext);
         return;
     }
     
-    if (!confirm("您确认将此订单交由 " + delieverlist[dlid].delievername + " 配送并支付配送费 " + parseFloat(dfee).toFixed(2) + " 元吗？"))
+    if (!confirm("您确认将此订单交由 " + delivererlist[dlid].deliverername + " 配送并支付配送费 " + parseFloat(dfee).toFixed(2) + " 元吗？"))
         return;
     
     $("#confirmbtn").text("正在提交");
     $("#confirmbtn").prop("disabled", true);
-    $("#selectdelieverbox").find("select").prop("disabled", true);
-    $("#selectdelieverbox").find("input").prop("disabled", true);
+    $("#selectdelivererbox").find("select").prop("disabled", true);
+    $("#selectdelivererbox").find("input").prop("disabled", true);
     
     request_data({
-        action: "setorderdeliever",
+        action: "setorderdeliverer",
         oid: oitem.oid,
-        delieverid: delieverlist[dlid].delieverid,
-        delieverfee: parseFloat(dfee),
+        delivererid: delivererlist[dlid].delivererid,
+        delivererfee: parseFloat(dfee),
     }).then(function (data) {
         if (data.result != "ok") {
-            show_error("setorderdeliever error: " + data.reason);
+            show_error("setorderdeliverer error: " + data.reason);
             return;
         }
         load_order_list();
@@ -76,7 +76,7 @@ function select_order_deliever(oitem)
             $("#omsgbox").empty();
         }, 5000);
     }, function (reason) {
-        show_error("can't set order deliever: " + reason);
+        show_error("can't set order deliverer: " + reason);
     });
 }
 
@@ -84,24 +84,24 @@ function show_order_detail(oitem)
 {
     if (is_rest_confirmable(oitem.ostate)) {
         $("#confirmbtn").show();
-        $("#selectdelieverbox").show();
+        $("#selectdelivererbox").show();
     } else {
         $("#confirmbtn").hide();
-        $("#selectdelieverbox").hide();
+        $("#selectdelivererbox").hide();
     }
     $("#omsgbox").empty();
     $("#backtoorderlistbtn").prop("disabled", false);
     $("#backtoorderlistbtn2").prop("disabled", false);
     $("#confirmbtn").prop("disabled", false).text("选择配送员");
-    $("#selectdelieverbox").find("select").prop("disabled", false).val("-1");
-    $("#selectdelieverbox").find("input").prop("disabled", false).val("");
+    $("#selectdelivererbox").find("select").prop("disabled", false).val("-1");
+    $("#selectdelivererbox").find("input").prop("disabled", false).val("");
     $("#orderlistpage").hide();
     $("#orderdetailpage").show();
     
     $("#od_consumername").text(oitem.oconsumername);
     $("#od_consumertel").text(oitem.oconsumertel);
     $("#od_consumeraddr").text(oitem.oconsumeraddr);
-    $("#od_delievername").text(oitem.odelievername);
+    $("#od_deliverername").text(oitem.odeliverername);
     $("#od_odatetime").text(oitem.odatetime);
     $("#od_stat").text(ostat2str(oitem.ostate));
     
@@ -143,7 +143,7 @@ function show_order_detail(oitem)
                     .text(ototal.toFixed(2))))
     );
     $("#confirmbtn").unbind("click").click( function () {
-        select_order_deliever(oitem, this);
+        select_order_deliverer(oitem, this);
     });
 }
 
@@ -178,7 +178,7 @@ function load_order_list()
             });
             var actionobj = $(document.createElement("td"));
             var confirmable = is_rest_confirmable(oitem.ostate);
-            if (confirmable) oitem["odelievername"] = "待选择";
+            if (confirmable) oitem["odeliverername"] = "待选择";
             
             $(document.createElement("button"))
                 .attr("type", "button")
@@ -197,7 +197,7 @@ function load_order_list()
                     .append($(document.createElement("td"))
                         .text(oitem.oconsumername))
                     .append($(document.createElement("td"))
-                        .text(oitem.odelievername))
+                        .text(oitem.odeliverername))
                     .append($(document.createElement("td"))
                         .text(ostat2str(oitem.ostate)))
                     .append(actionobj)
@@ -212,6 +212,6 @@ function load_order_list()
 $(document).ready( function () {
     check_login();
     init_navbar();
-    load_deliever_list();
+    load_deliverer_list();
     load_order_list();
 });
