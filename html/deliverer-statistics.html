@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>DB PJ</title>
+    
+    <!-- frameworks -->
+    <link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="js/js.cookie-2.1.1.min.js"></script>
+    
+    <!-- our css and js -->
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/common.js"></script>
+    <script src="js/deliverer-statistics.js"></script>
+</head>
+<body>
+
+<!-- body begin -->
+
+<div id="navbarbox">
+</div>
+
+
+
+
+
+
+<div id="querypage" class="container mainbox">
+<div class="page-header">
+<h2>查询统计信息</h2>
+</div>
+
+<div id="reststatform" class="normalinputbox">
+<p><label for="inputstatstart">起始日期</label><input type="text" name="statstart" id="inputstatstart" class="form-control"></p>
+<p><label for="inputstatend">结束日期</label><input type="text" name="statend" id="inputstatend" class="form-control"></p>
+
+
+
+<div id="reststatmsgbox" style="width: 500px; margin-left: 10px; margin-top: 20px;"></div>
+
+<p style="margin-top: 20px; margin-left: 10px; margin-bottom: 20px; padding: 0px; width: 500px; text-align: right;">
+<button type="button" id="resetbtn" class="btn btn-default" onclick="reset_reststat_form()">重置</button>
+<button type="button" id="submitbtn" class="btn btn-success" onclick="query_statistics()">提交查询</button>
+</p>
+</div>
+</div>
+
+<div id="resultpage" class="container mainbox">
+<div class="page-header">
+<div style="display: inline-block; vertical-align: top; margin-top: -1px;">
+<button type="button" id="backtoinputbtn" class="btn btn-lg btn-default" style="border-radius: 50%; padding: 0px; height: 40px; width: 40px; line-height: 100%;" onclick="reset_reststat_form()">
+<span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+</button>
+</div>
+<div style="display: inline-block; height: 43px;">
+<h2 style="display: inline;">
+&nbsp;&nbsp;查询结果
+</h2>
+</div>
+</div>
+
+
+<div style="padding: 10px; margin-bottom: 10px;">
+<p><strong style="display: inline-block; vertical-align: top;">查询起始日期：</strong><span id="od_start"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">查询结束日期：</strong><span id="od_end"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">期间总配送费：</strong><span id="od_revenue"></span></p>
+</div>
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+</div>
+</body>
+</html>
