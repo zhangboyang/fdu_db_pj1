@@ -133,11 +133,13 @@ function load_rest_list()
     $("#cuisinepage").hide();
     
     $("#resttable").children("tbody").html("<tr><td></td><td>加载中 ...</td><td></td></tr>");
+    //show_error ("error!!!!");
     request_data({
         action: "getrestlist",
     }).then( function (data) {
+    	//show_error ("aoaoao " + data.result);
         if (data.result != "ok") {
-            show_error("getrestlist error: " + data.reason);
+            show_error("getrestlist error: " + data.result + " and " + data.reason);
             return;
         }
         var rlist = data.data;

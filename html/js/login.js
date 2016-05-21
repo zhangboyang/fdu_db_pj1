@@ -89,7 +89,10 @@ function init_loginform()
                 var sdata = {
                     username: username,
                     userrole: userrole,
-                    sessionid: data.sessionid,
+                    rid: data.rid,
+                    uid: data.uid,
+                    id: data.id,
+                    delivererid: data.delivererid,
                     sessionlife: data.sessionlife,
                     timestamp: timestamp.getTime(),
                     expires: expdate.getTime(),

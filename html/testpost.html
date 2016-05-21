@@ -20,16 +20,11 @@ RESULT: <span id="pstat">ready</span><br>
 
 <script>
 $(document).ready( function () {
-    $("#purl").val(""); // default URL
-    $("#ppname").val("test"); // default NAME
+    $("#purl").val("http://localhost:8080/DataBase/RestServlet"); // default URL
+    $("#ppname").val("data"); // default NAME
     $("#pdata").text(JSON.stringify( // defaule DATA
         {
-            mystring: "helloworld",
-            myint: 123456,
-            myarray: [
-                { key1 : "aaaa", key2 : "bbbb", key3: "cccc" },
-                { key1 : "dddd", key2 : "eeee", key3: "ffff" },
-            ],
+            action:"getrestlist"
         }
     , null, "  "));
     $("#pbtn").click( function () {

@@ -194,8 +194,8 @@ function request_data(parameters)
     }
     
     
-    if (request_login && !check_login())
-        return new Promise ( function (resolve, reject) { reject("登录超时"); });
+    //if (request_login && !check_login())
+        //return new Promise ( function (resolve, reject) { reject("登录超时"); });
     
     console.log("REQUEST DATA: ", parameters);
     
@@ -204,17 +204,86 @@ function request_data(parameters)
     
     var url = "";
     switch (parameters.action) {
-        case "getrestlist":
+    	
+    	case "login":
+    		url = "LoginServlet";
+    		break;
+    	case "logout":
+    		url = "logout";
+    		break;
+    	case "register":
+            url = "RegisteServlet";
+            break;
+    	case "getrestlist":
             url = "RestServlet";
+            break;
+        case "getcuisinelist":
+            url = "RestServlet";
+            break;
+        case "getdelivererlist":
+            url = "RestServlet";
+            break;
+        case "submitorder":
+            url = "UserServlet";
+            break;
+        case "setorderdeliverer":
+            url = "RestServlet";
+            break;
+        case "getorderlist":
+            url = "UserServlet";
+            break;
+        case "getrestorderlist":
+            url = "RestServlet";
+            break;
+        case "getdelivererorderlist":
+            url = "DelivererServlet";
+            break;
+        case "confirmorder":
+            url = "UserServlet";
+            break;
+        case "getuserinfo":
+            url = "UserServlet";
+            break;
+        case "setuserinfo":
+            url = "UserServlet";
+            break;
+        case "getreststatistics":
+            url = "RestServlet";
+            break;
+        case "getcuisinelist":
+            url = "UserServlet";
+            break;
+        case "createcuisine"://
+            url = "RestServlet";
+            break;
+        case "deletecuisine"://
+            url = "RestServlet";
+            break;
+        case "getrestdesc"://
+            url = "RestServlet";
+            break;
+        case "setcuisineinfo"://
+            url = "RestServlet";
+            break;
+        case "deliveryconfirm":
+            url = "DelivererServlet";
             break;
     }
     
     ///
     
     if (url != "") {
-        url = "/db/" + url;
+        url = "http://localhost:8080/DataBase/" + url;
+        var sdata = get_session_data();
+        if (sdata) {
+        	parameters["uid"] = sdata.uid;
+        	parameters["rid"] = sdata.rid;
+        	parameters["id"] = sdata.id;
+        	parameters["delivererid"] = sdata.delivererid;
+        }
         return new Promise ( function (resolve, reject) {
-            $.post(url, parameters, null, "json").done( function (data, textStatus, jqXHR) {
+            $.post(url, { data: JSON.stringify(parameters) }, null, "json").done( function (data, textStatus, jqXHR) {
+            	console.log("REMOTE RESPONSE: " + JSON.stringify(data));
                 resolve(data);
             }).fail( function (xhr, textStatus, errorThrown) {
                 reject("post to " + url + " failed: " + textStatus + ", " + errorThrown);
