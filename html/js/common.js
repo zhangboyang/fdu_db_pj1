@@ -674,6 +674,44 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                     totalsalary: "1234.56",
+                    data: [
+                        {
+                            oid: 3000,
+                            orestid: 4000,
+                            orestname: "逍遥客栈",
+                            odatetime: "2016-03-48 32:18",
+                            ofinishtime: "2016-01-34 00:93",
+                            ostate: "finished",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odeliverername: "张三",
+                            odeliverertel: "12345",
+                            odelivererfee: 20.00,
+                            ocontent: [
+                                { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
+                                { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
+                            ],
+                        },
+                        {
+                            oid: 1000,
+                            orestid: 5000,
+                            orestname: "仙剑客栈",
+                            odatetime: "2016-01-32 01:93",
+                            ofinishtime: "2016-01-34 00:93",
+                            ostate: "delivering",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odeliverername: "张三",
+                            odeliverertel: "12345",
+                            odelivererfee: 20.00,
+                            ocontent: [
+                                { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
+                            ],
+                        },
+                    ],
                 };
             } else {
                 reject("unknown action!");
