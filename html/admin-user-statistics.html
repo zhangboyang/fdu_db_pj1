@@ -12,7 +12,7 @@
     <!-- our css and js -->
     <link href="css/common.css" rel="stylesheet">
     <script src="js/common.js"></script>
-    <script src="js/rest-statistics.js"></script>
+    <script src="js/admin-user-statistics.js"></script>
 </head>
 <body>
 
@@ -28,7 +28,7 @@
 
 <div id="querypage" class="container mainbox">
 <div class="page-header">
-<h2>查询统计信息</h2>
+<h2>查询用户统计信息</h2>
 </div>
 
 <div id="reststatform" class="normalinputbox">
@@ -64,6 +64,7 @@
 <div style="padding: 10px; margin-bottom: 10px;">
 <p><strong style="display: inline-block; vertical-align: top;">查询起始日期：</strong><span id="od_start"></span></p>
 <p><strong style="display: inline-block; vertical-align: top;">查询结束日期：</strong><span id="od_end"></span></p>
+<p><strong style="display: inline-block; vertical-align: top;">期间总订单数：</strong><span id="od_orderamount"></span></p>
 <p><strong style="display: inline-block; vertical-align: top;">期间总营业额：</strong><span id="od_revenue"></span></p>
 </div>
 
@@ -71,14 +72,14 @@
 <strong style="display: inline-block; vertical-align: top;">最热门菜品：</strong>
 </p>
 <p>
-<table id="cuisinetable" class="table table-striped">
+<table id="usertable" class="table table-striped">
 <thead>
 <tr>
-<th width="25%">菜名</th>
-<th>简介</th>
-<th width="15%">单价</th>
-<th width="15%">销售数量</th>
-<th width="15%">合计金额</th>
+<th width="25%">客户姓名</th>
+<th>客户地址</th>
+<th width="15%">客户电话</th>
+<th width="15%">订单数量</th>
+<th width="15%">总计消费</th>
 </tr>
 </thead>
 <tbody>
@@ -86,7 +87,7 @@
 </tbody>
 </table>
 
-<p id="ordertotal" style="text-align: right; padding-right: 20px"></p>
+<p style="text-align: right; padding-right: 20px"></p>
 <p style="text-align: right; padding-right: 20px">
 <button type="button" id="backtoinputbtn2" class="btn btn-default" onclick="back_to_query()">返回</button>
 </p>

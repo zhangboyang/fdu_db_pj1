@@ -27,38 +27,37 @@ function query_statistics()
     $("#reststatform").find("button").prop("disabled", true);
     $("#submitbtn").text("查询中");
     request_data({
-        action: "getreststatistics",
+        action: "getadminreststatistics",
         statstart: qstart,
         statend: qend,
     }).then( function (data) {
         if (data.result != "ok") {
-            show_error("getreststatistics error: " + data.reason);
+            show_error("getadminreststatistics error: " + data.reason);
             return;
         }
-        var tobj = $("#cuisinetable").children("tbody");
+        var tobj = $("#resttable").children("tbody");
         tobj.empty();
-        $("#od_revenue").text(parseFloat(data.revenue).toFixed(2));
-        data.popularcuisine.forEach( function (citem) {
-            var curcount = parseInt(citem.camount);
-            var curprice = parseFloat(citem.cprice) * curcount;
+        $("#od_revenue").text(parseFloat(data.totalrevenue).toFixed(2));
+        $("#od_orderamount").text(data.totalorderamount);
+        data.data.forEach( function (ritem) {
             tobj.append(
                 $(document.createElement("tr"))
                     .append($(document.createElement("td"))
-                        .text(citem.cname))
+                        .text(ritem.rname))
                     .append($(document.createElement("td"))
-                        .text(citem.cdesc))
+                        .text(ritem.rdesc))
                     .append($(document.createElement("td"))
-                        .text(citem.cprice))
+                        .text(ritem.rmostpopularcuisine))
                     .append($(document.createElement("td"))
-                        .text(citem.camount))
+                        .text(ritem.rorderamount))
                     .append($(document.createElement("td"))
-                        .text(curprice.toFixed(2)))
+                        .text(parseFloat(ritem.rrevenue).toFixed(2)))
             );
         });
         $("#querypage").hide();
         $("#resultpage").show();
     }, function (reason) {
-        show_error("can't get rest statisiics: " + reason);
+        show_error("can't get admin rest statisiics: " + reason);
     });
 }
 

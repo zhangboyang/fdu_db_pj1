@@ -863,6 +863,45 @@ function request_data(parameters)
                         rtel: "请输入电话",
                     }
                 };
+            } else if (parameters.action == "getadminreststatistics") {
+                /* ####### ACTION: getadminreststatistics #######
+                    input 
+                        {
+                            action: "getadminreststatistics",
+                            statstart: qstart,
+                            statend: qend,
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    totalrevenue: "12345.67",
+                    totalorderamount: "1234",
+                    data: [
+                        { rid: 1000, rname: "山中野店", rdesc: "酒和菜都是西南边疆的特产", rmostpopularcuisine: "X", rorderamount: 100, rrevenue: "123413.3242"},
+                        { rid: 2000, rname: "全家", rdesc: "FamilyMart", rmostpopularcuisine: "Y", rorderamount: 102, rrevenue: "1234.3455"},
+                        { rid: 3000, rname: "泡泡香香鸡", rdesc: "主要售卖炸鸡排", rmostpopularcuisine: "Z", rorderamount: 104, rrevenue: "13434.323"},
+                    ]
+                };
+            } else if (parameters.action == "getadminuserstatistics") {
+                /* ####### ACTION: getadminreststatistics #######
+                    input 
+                        {
+                            action: "getadminreststatistics",
+                            statstart: qstart,
+                            statend: qend,
+                        }
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    totalrevenue: "12345.67",
+                    totalorderamount: "1234",
+                    data: [
+                        { uid: 1000, uname: "景天", uaddr: "雪见旁边", utel: "123456", uorderamount: 10000, uconsumption: "123413.3242"},
+                        { uid: 2000, uname: "唐雪见", uaddr: "景天旁边", utel: "654321", uorderamount: 102, uconsumption: "1234.3455"},
+                    ]
+                };
             } else {
                 reject("unknown action!");
                 return;
