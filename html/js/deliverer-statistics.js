@@ -10,6 +10,7 @@ function reset_reststat_form()
     $("#reststatform").find("input").prop("disabled", false);
     $("#reststatform").find("button").prop("disabled", false);
     $("#submitbtn").text("提交查询");
+    
 }
 
 function query_statistics()
@@ -21,22 +22,26 @@ function query_statistics()
     $("#reststatform").find("input").prop("disabled", true);
     $("#reststatform").find("button").prop("disabled", true);
     $("#submitbtn").text("查询中");
+    $("#resultpage").hide();
     request_data({
-        action: "getreststatistics",
+        action: "getdelivererstatistics",
         statstart: qstart,
         statend: qend,
     }).then( function (data) {
         if (data.result != "ok") {
-            show_error("getreststatistics error: " + data.reason);
+            show_error("getdelivererstatistics error: " + data.reason);
             return;
         }
-        var tobj = $("#cuisinetable").children("tbody");
-        tobj.empty();
-        $("#od_revenue").text(data.revenue);
-        $("#querypage").hide();
+        //var tobj = $("#cuisinetable").children("tbody");
+        //tobj.empty();
+        $("#od_salary").text(data.totalsalary);
+        //$("#querypage").hide();
         $("#resultpage").show();
+        $("#reststatform").find("input").prop("disabled", false);
+        $("#reststatform").find("button").prop("disabled", false);
+        $("#submitbtn").text("提交查询");
     }, function (reason) {
-        show_error("can't get rest statisiics: " + reason);
+        show_error("can't deliverer statisiics: " + reason);
     });
 }
 

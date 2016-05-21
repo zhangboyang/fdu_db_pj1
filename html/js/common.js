@@ -5,7 +5,8 @@ function make_popup_msgbox(obj)
             .css("position", "fixed")
             .css("left", "50%")
             .css("top", "50%")
-            .css("transform", "translate(-50%, -50%)");
+            .css("transform", "translate(-50%, -50%)")
+            .css("z-index", "100");
 }
 
 var login_timeout_flag = false;
@@ -204,7 +205,6 @@ function request_data(parameters)
     
     var url = "";
     switch (parameters.action) {
-    	
     	case "login":
     		url = "LoginServlet";
     		break;
@@ -214,64 +214,33 @@ function request_data(parameters)
     	case "register":
             url = "RegisteServlet";
             break;
-    	case "getrestlist":
-            url = "RestServlet";
-            break;
-        case "getcuisinelist":
-            url = "RestServlet";
-            break;
-        case "getdelivererlist":
-            url = "RestServlet";
-            break;
         case "submitorder":
-            url = "UserServlet";
-            break;
-        case "setorderdeliverer":
-            url = "RestServlet";
-            break;
+        case "confirmorder":
+        case "getuserinfo":
+        case "setuserinfo":
+        case "getcuisinelist":
         case "getorderlist":
             url = "UserServlet";
             break;
+        case "getrestlist":
+        case "getcuisinelist":
+        case "getdelivererlist":
+        case "setorderdeliverer":
         case "getrestorderlist":
-            url = "RestServlet";
-            break;
-        case "getdelivererorderlist":
-            url = "DelivererServlet";
-            break;
-        case "confirmorder":
-            url = "UserServlet";
-            break;
-        case "getuserinfo":
-            url = "UserServlet";
-            break;
-        case "setuserinfo":
-            url = "UserServlet";
-            break;
+        case "createcuisine":
+        case "deletecuisine":
+        case "getrestdesc":
+        case "setcuisineinfo":
         case "getreststatistics":
             url = "RestServlet";
             break;
-        case "getcuisinelist":
-            url = "UserServlet";
-            break;
-        case "createcuisine"://
-            url = "RestServlet";
-            break;
-        case "deletecuisine"://
-            url = "RestServlet";
-            break;
-        case "getrestdesc"://
-            url = "RestServlet";
-            break;
-        case "setcuisineinfo"://
-            url = "RestServlet";
-            break;
+        case "getdelivererorderlist":
         case "deliveryconfirm":
             url = "DelivererServlet";
             break;
     }
     
-    ///
-    
+    url = "";
     if (url != "") {
         url = "http://localhost:8080/DataBase/" + url;
         var sdata = get_session_data();
@@ -693,6 +662,18 @@ function request_data(parameters)
                 */
                 data = {
                     result: "ok",
+                };
+            } else if (parameters.action == "getdelivererstatistics") {
+                /* ####### ACTION: getdelivererstatistics #######
+                    input 
+                        action: "getdelivererstatistics",
+                        statstart: qstart,
+                        statend: qend,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    totalsalary: "1234.56",
                 };
             } else {
                 reject("unknown action!");
