@@ -108,8 +108,9 @@ function init_navbar()
         +''
         +'      <ul class="nav navbar-nav navbar-right">'
         +'        <li><a href="admin.html">编辑餐厅</a></li>'
-        +'        <li><a href="admin-order-statistics.html">用户订单统计</a></li>'
-        +'        <li><a href="admin-rest-statistics.html">餐厅点餐统计</a></li>'
+        +'        <li><a href="admin-order-statistics.html">订单统计</a></li>'
+        +'        <li><a href="admin-user-statistics.html">用户统计</a></li>'
+        +'        <li><a href="admin-rest-statistics.html">餐厅统计</a></li>'
 //        +'        <li><a href="userinfo.html">个人信息</a></li>'
         +'        <li><a href="logout.html">退出</a></li>'
         +'      </ul>'
@@ -687,7 +688,7 @@ function request_data(parameters)
                 data = {
                     result: "ok",
                 };
-            } else if (parameters.action == "getdelivererstatistics") {
+            } else if (parameters.action == "getadminorderstatistics") {
                 /* ####### ACTION: getdelivererstatistics #######
                     input 
                         action: "getdelivererstatistics",
@@ -703,6 +704,8 @@ function request_data(parameters)
                             oid: 3000,
                             orestid: 4000,
                             orestname: "逍遥客栈",
+                            orestaddr: "PAL",
+                            oresttel: "12345678",
                             odatetime: "2016-03-48 32:18",
                             ofinishtime: "2016-01-34 00:93",
                             ostate: "finished",
@@ -722,6 +725,62 @@ function request_data(parameters)
                             oid: 1000,
                             orestid: 5000,
                             orestname: "仙剑客栈",
+                            orestaddr: "PAL",
+                            oresttel: "12345678",
+                            odatetime: "2016-01-32 01:93",
+                            ofinishtime: "2016-01-34 00:93",
+                            ostate: "delivering",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odeliverername: "张三",
+                            odeliverertel: "12345",
+                            odelivererfee: 20.00,
+                            ocontent: [
+                                { cid: "djp", cname: "招牌大鸡排", cprice: "13.00", cdesc: "好吃的鸡排", camount: 1 },
+                            ],
+                        },
+                    ],
+                };
+            } else if (parameters.action == "getdelivererstatistics") {
+                /* ####### ACTION: getdelivererstatistics #######
+                    input 
+                        action: "getdelivererstatistics",
+                        statstart: qstart,
+                        statend: qend,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    totalsalary: "1234.56",
+                    data: [
+                        {
+                            oid: 3000,
+                            orestid: 4000,
+                            orestname: "逍遥客栈",
+                            orestaddr: "PAL",
+                            oresttel: "12345678",
+                            odatetime: "2016-03-48 32:18",
+                            ofinishtime: "2016-01-34 00:93",
+                            ostate: "finished",
+                            oconsumername: "王五",
+                            oconsumertel: "13800138000",
+                            oconsumeraddr: "mars",
+                            odeliverername: "张三",
+                            odeliverertel: "12345",
+                            odelivererfee: 20.00,
+                            ocontent: [
+                                { cid: "dbf", cname: "番茄滑蛋饭", cprice: "14.30", cdesc: "其实就是西红柿鸡蛋盖饭", camount: 1 },
+                                { cid: "ft", cname: "孜然烤鸡饭团", cprice: "7.20", cdesc: "一般的饭团", camount: 5 },
+                                { cid: "lm", cname: "本帮炒素凉面", cprice: "13.20", cdesc: "一点肉都没有！", camount: 7 },
+                            ],
+                        },
+                        {
+                            oid: 1000,
+                            orestid: 5000,
+                            orestname: "仙剑客栈",
+                            orestaddr: "PAL",
+                            oresttel: "12345678",
                             odatetime: "2016-01-32 01:93",
                             ofinishtime: "2016-01-34 00:93",
                             ostate: "delivering",
