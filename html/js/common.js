@@ -94,6 +94,29 @@ function init_navbar()
         +'    </div>'
         +'  </div>'
         +'</nav>';
+
+    var adminnavbar =
+        '<nav class="navbar navbar-fixed-top">'
+        +'  <div class="container">'
+        +'    <div class="navbar-header">'
+        +'      <span class="navbar-brand">欢迎使用外卖系统 - 管理员版</span>'
+        +'    </div>'
+        +'    <div id="navbar"><!--'
+        +'      <ul class="nav navbar-nav">'
+        +'        <li><a href="#">Link</a></li>'
+        +'      </ul>-->'
+        +''
+        +'      <ul class="nav navbar-nav navbar-right">'
+        +'        <li><a href="admin.html">编辑餐厅</a></li>'
+        +'        <li><a href="admin-order-statistics.html">用户订单统计</a></li>'
+        +'        <li><a href="admin-rest-statistics.html">餐厅点餐统计</a></li>'
+//        +'        <li><a href="userinfo.html">个人信息</a></li>'
+        +'        <li><a href="logout.html">退出</a></li>'
+        +'      </ul>'
+        +'    </div>'
+        +'  </div>'
+        +'</nav>';
+
     var loginnavbar =
         '<nav class="navbar navbar-fixed-top">'
         +'  <div class="container">'
@@ -110,8 +133,7 @@ function init_navbar()
         +'      </ul>'
         +'    </div>'
         +'  </div>'
-        +'</nav>';
-        
+        +'</nav>';  
     var userrole = "";
     var sdata = get_session_data();
     if (sdata) userrole = sdata.userrole;
@@ -122,6 +144,8 @@ function init_navbar()
         $("#navbarbox").html(restnavbar);
     } else if (userrole == "deliverer") {
         $("#navbarbox").html(deliverernavbar);
+    } else if (userrole == "admin") {
+        $("#navbarbox").html(adminnavbar);
     } else {
         $("#navbarbox").html(loginnavbar);
     }
@@ -712,6 +736,73 @@ function request_data(parameters)
                             ],
                         },
                     ],
+                };
+            } else if (parameters.action == "getadminrestlist") {
+                /* ####### ACTION: getrestdesc #######
+                    input 
+                        action: "getrestdesc",
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: [
+                        { rid: 1000, rname: "山中野店", rdesc: "酒和菜都是西南边疆的特产", rtel: "12345", raddr: "PAL"},
+                        { rid: 2000, rname: "全家", rdesc: "FamilyMart", rtel: "13800138000", raddr: "蔡伦路华佗路"},
+                        { rid: 3000, rname: "泡泡香香鸡", rdesc: "主要售卖炸鸡排", rtel: "13800123456", raddr: "高科苑门口"},
+                    ]
+                };
+            } else if (parameters.action == "setrestinfo") {
+                /* ####### ACTION: setrestdesc #######
+                    input 
+                        rid: ritem.rid,
+                        rname: newrname,
+                        rdesc: newrdesc,
+                        raddr: newraddr,
+                        rtel: newrtel,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "setrestpassword") {
+                /* ####### ACTION: setrestdesc #######
+                    input 
+                        action: "setrestpassword",
+                        rid: ritem.rid,
+                        newpassword: newpasswd,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "deleterest") {
+                /* ####### ACTION: setrestdesc #######
+                    input 
+                        rid: ritem.rid,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                };
+            } else if (parameters.action == "createrest") {
+                /* ####### ACTION: setrestdesc #######
+                    input 
+                        rid: ritem.rid,
+                        rname: newrname,
+                        rdesc: newrdesc,
+                        raddr: newraddr,
+                        rtel: newrtel,
+                    output example see below
+                */
+                data = {
+                    result: "ok",
+                    data: {
+                        rid: 33333,
+                        rname: "请输入名称",
+                        rdesc: "请输入简介",
+                        raddr: "请输入地址",
+                        rtel: "请输入电话",
+                    }
                 };
             } else {
                 reject("unknown action!");
